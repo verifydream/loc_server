@@ -1,66 +1,192 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Location Server
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Location Server adalah sebuah proyek aplikasi backend yang dibangun menggunakan Laravel 10. Aplikasi ini menyediakan API endpoint untuk memeriksa lokasi pengguna berdasarkan email, serta panel admin untuk mengelola data pengguna dan lokasi.
 
-## About Laravel
+## Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Berdasarkan file-file proyek, berikut adalah fitur-fitur utamanya:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* **API Pengecekan Lokasi**: Menyediakan endpoint API (`/api/check-location`) yang menerima parameter `email` untuk memvalidasi dan mengembalikan data lokasi pengguna.
+* **Perlindungan API**: Endpoint API dilindungi dengan *throttling* (pembatasan permintaan) 60 permintaan per menit dan logging kustom (`log.api`).
+* **Panel Admin**:
+    * Sistem autentikasi terpisah untuk admin (`/admin/login`, `/admin/logout`).
+    * Dashboard admin yang dilindungi (`/admin/dashboard`).
+    * Manajemen (CRUD) untuk Pengguna (`admin/users`).
+    * Manajemen (CRUD) untuk Lokasi (`admin/locations`).
+* **Layanan (Services)**: Menggunakan pola *Service Pattern* untuk memisahkan logika bisnis (misalnya `LocationService` yang digunakan oleh `LocationController`).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Teknologi yang Digunakan
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Proyek ini dibangun menggunakan tumpukan teknologi berikut, berdasarkan `composer.json`:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+* **PHP 8.1+**
+* **Laravel Framework 10.0+**
+* **Laravel Sanctum** (untuk autentikasi API)
+* **Guzzle HTTP Client** (untuk membuat permintaan HTTP)
+* **PHPUnit** (untuk pengujian)
+* **MySQL 8.0+** (direkomendasikan di `SETUP.md`)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## Prasyarat dan Instalasi
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Berikut adalah prasyarat dan langkah-langkah untuk menjalankan proyek ini secara lokal, berdasarkan `SETUP.md`.
 
-### Premium Partners
+### Prasyarat
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+* PHP 8.1 atau lebih tinggi
+* Composer
+* MySQL 8.0 atau lebih tinggi
+* Node.js dan NPM
 
-## Contributing
+### Langkah-langkah Instalasi
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1.  **Clone repositori:**
+    ```bash
+    git clone [https://github.com/USERNAME/REPO_NAME.git](https://github.com/USERNAME/REPO_NAME.git)
+    cd REPO_NAME
+    ```
 
-## Code of Conduct
+2.  **Install dependensi PHP:**
+    ```bash
+    composer install
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3.  **Konfigurasi Lingkungan (.env):**
+    Proyek ini memiliki skrip untuk menyalin `.env.example` ke `.env` secara otomatis. Pastikan Anda membuat database MySQL terlebih dahulu.
+    ```sql
+    CREATE DATABASE location_server CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    ```
+    Kemudian, perbarui file `.env` Anda dengan kredensial database yang benar. Pengaturan default yang ada di `SETUP.md` adalah:
+    ```
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=location_server
+    DB_USERNAME=root
+    DB_PASSWORD=
+    ```
+    *Catatan: Sesuaikan `DB_PASSWORD` jika root MySQL Anda memiliki password.*
 
-## Security Vulnerabilities
+4.  **Hasilkan Kunci Aplikasi:**
+    ```bash
+    php artisan key:generate
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+5.  **Jalankan Migrasi Database:**
+    Perintah ini akan membuat semua tabel yang diperlukan di database Anda.
+    ```bash
+    php artisan migrate
+    ```
 
-## License
+6.  **Jalankan Seeder (Opsional tapi Direkomendasikan):**
+    Perintah ini akan mengisi database dengan data awal (misalnya, data admin, pengguna, dan lokasi).
+    ```bash
+    php artisan db:seed
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+7.  **Install Dependensi Frontend:**
+    ```bash
+    npm install
+    npm run dev
+    ```
+
+8.  **Jalankan Server Pengembangan:**
+    ```bash
+    php artisan serve
+    ```
+    Aplikasi sekarang akan berjalan di `http://127.0.0.1:8000`.
+
+---
+
+## Susunan Project
+
+Berikut adalah gambaran singkat tentang struktur file dan direktori penting dalam proyek Laravel ini:
+
+* `app/Http/Controllers/Api/LocationController.php`: Mengendalikan logika untuk endpoint API `/api/check-location`.
+* `app/Http/Controllers/AdminAuthController.php`: Mengelola logika login dan logout untuk admin.
+* `app/Http/Controllers/UserController.php`: Mengelola CRUD untuk pengguna di panel admin.
+* `app/Http/Controllers/LocationManagementController.php`: Mengelola CRUD untuk lokasi di panel admin.
+* `app/Services/LocationService.php`: Berisi logika bisnis inti untuk memeriksa lokasi pengguna.
+* `app/Models/`: Berisi model Eloquent (misalnya `User.php`, `Location.php`, `Admin.php`).
+* `routes/api.php`: Mendefinisikan semua rute yang diawali dengan `/api`, termasuk `/check-location`.
+* `routes/web.php`: Mendefinisikan rute untuk aplikasi web, termasuk panel admin (`/admin/*`).
+* `database/migrations/`: Berisi file-file skema database.
+* `database/seeders/`: Berisi file-file untuk mengisi data awal database.
+* `SETUP.md`: Catatan panduan setup yang spesifik untuk proyek ini.
+* `composer.json`: Mendefinisikan dependensi PHP proyek.
+
+---
+
+## Contoh Penggunaan
+
+### 1. API (Check Location)
+
+Anda dapat menguji endpoint API menggunakan `curl` atau alat seperti Postman. Endpoint ini menerima metode `GET` atau `POST`.
+
+**Permintaan (Request):**
+```bash
+# Menggunakan GET
+curl "[http://127.0.0.1:8000/api/check-location?email=user@example.com](http://127.0.0.1:8000/api/check-location?email=user@example.com)"
+
+# Menggunakan POST
+curl -X POST [http://127.0.0.1:8000/api/check-location](http://127.0.0.1:8000/api/check-location) \
+     -H "Content-Type: application/json" \
+     -d '{"email": "user@example.com"}'
+````
+
+**Respon Sukses (Success Response):**
+
+```json
+{
+    "success": true,
+    "data": {
+        "user_email": "user@example.com",
+        "location_name": "Nama Lokasi",
+        "status": "allowed"
+    }
+}
+```
+
+**Respon Gagal (Error Response - Validasi):**
+
+```json
+{
+    "success": false,
+    "message": "Validation error",
+    "errors": {
+        "email": [
+            "The email field is required."
+        ]
+    }
+}
+```
+
+### 2\. Panel Admin
+
+1.  Akses halaman login admin di browser Anda: `http://127.0.0.1:8000/admin/login`.
+2.  Gunakan kredensial admin (yang mungkin telah dibuat melalui *seeder*) untuk masuk.
+3.  Setelah berhasil login, Anda akan diarahkan ke dashboard (`/admin/dashboard`) di mana Anda dapat mengelola pengguna dan lokasi.
+
+-----
+
+## Kontribusi
+
+Kami menyambut baik kontribusi\! Jika Anda ingin berkontribusi pada proyek ini, silakan ikuti langkah-langkah berikut:
+
+1.  **Fork** repositori ini.
+2.  Buat *branch* fitur baru (`git checkout -b fitur/nama-fitur`).
+3.  *Commit* perubahan Anda (`git commit -m 'Menambahkan fitur A'`).
+4.  *Push* ke *branch* Anda (`git push origin fitur/nama-fitur`).
+5.  Buka **Pull Request**.
+
+-----
+
+## Lisensi
+
+Proyek ini dilisensikan di bawah **Lisensi MIT**. Lihat file `LICENSE` untuk detail lebih lanjut.
+
+```
+```
