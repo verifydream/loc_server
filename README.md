@@ -1,192 +1,158 @@
-# Location Server
+# 📍 Location Resolver & App Update Server (`loc_server`)
 
-Location Server adalah sebuah proyek aplikasi backend yang dibangun menggunakan Laravel 10. Aplikasi ini menyediakan API endpoint untuk memeriksa lokasi pengguna berdasarkan email, serta panel admin untuk mengelola data pengguna dan lokasi.
+[![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=for-the-badge&logo=php)](https://php.net)
+[![Laravel](https://img.shields.io/badge/Laravel-10.x-FF2D20?style=for-the-badge&logo=laravel)](https://laravel.com)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql)](https://mysql.com)
 
-## Fitur Utama
+Proyek backend Laravel ini berfungsi sebagai *server* pendukung untuk aplikasi mobile Flutter internal. Proyek ini memiliki dua tanggung jawab utama:
+1.  **Resolver Lokasi:** Memberi tahu aplikasi Flutter URL API cabang (tenant) yang benar berdasarkan email user.
+2.  **Server In-App Update:** Menyediakan API untuk *auto-update* aplikasi Android (`.apk`) tanpa melalui Google Play Store.
 
-Berdasarkan file-file proyek, berikut adalah fitur-fitur utamanya:
+## ✨ Fitur Utama
 
-* **API Pengecekan Lokasi**: Menyediakan endpoint API (`/api/check-location`) yang menerima parameter `email` untuk memvalidasi dan mengembalikan data lokasi pengguna.
-* **Perlindungan API**: Endpoint API dilindungi dengan *throttling* (pembatasan permintaan) 60 permintaan per menit dan logging kustom (`log.api`).
-* **Panel Admin**:
-    * Sistem autentikasi terpisah untuk admin (`/admin/login`, `/admin/logout`).
-    * Dashboard admin yang dilindungi (`/admin/dashboard`).
-    * Manajemen (CRUD) untuk Pengguna (`admin/users`).
-    * Manajemen (CRUD) untuk Lokasi (`admin/locations`).
-* **Layanan (Services)**: Menggunakan pola *Service Pattern* untuk memisahkan logika bisnis (misalnya `LocationService` yang digunakan oleh `LocationController`).
+* **Admin Dashboard:** Antarmuka web untuk me-manage:
+    * **Manajemen Lokasi:** CRUD untuk semua cabang perusahaan (Surabaya, Jakarta, Belawan, dll) beserta URL API unik mereka.
+    * **Manajemen User:** CRUD untuk user aplikasi (tim Survey & Crani), menautkan mereka ke lokasi cabang yang sesuai.
+    * **Manajemen Versi Aplikasi:** Halaman untuk meng-upload file `.apk` baru, mencatat *version code*, dan *release notes*.
+* **API Resolver Lokasi:** Satu API publik (`/api/check-location`) untuk memvalidasi email dan mengembalikan URL API yang benar.
+* **API In-App Update:** Satu API aman (`/api/latest-version`) yang mengembalikan data versi `.apk` terbaru dan URL unduhan.
+* **Keamanan API:** Endpoint *In-App Update* dilindungi menggunakan *middleware* `X-Api-Key` kustom.
 
----
+## ⚙️ Instalasi & Setup (Lokal)
 
-## Teknologi yang Digunakan
-
-Proyek ini dibangun menggunakan tumpukan teknologi berikut, berdasarkan `composer.json`:
-
-* **PHP 8.1+**
-* **Laravel Framework 10.0+**
-* **Laravel Sanctum** (untuk autentikasi API)
-* **Guzzle HTTP Client** (untuk membuat permintaan HTTP)
-* **PHPUnit** (untuk pengujian)
-* **MySQL 8.0+** (direkomendasikan di `SETUP.md`)
-
----
-
-## Prasyarat dan Instalasi
-
-Berikut adalah prasyarat dan langkah-langkah untuk menjalankan proyek ini secara lokal, berdasarkan `SETUP.md`.
-
-### Prasyarat
-
-* PHP 8.1 atau lebih tinggi
-* Composer
-* MySQL 8.0 atau lebih tinggi
-* Node.js dan NPM
-
-### Langkah-langkah Instalasi
-
-1.  **Clone repositori:**
+1.  **Clone Repository**
     ```bash
-    git clone [https://github.com/USERNAME/REPO_NAME.git](https://github.com/USERNAME/REPO_NAME.git)
-    cd REPO_NAME
+    git clone [URL_REPO_ANDA]
+    cd loc_server
     ```
 
-2.  **Install dependensi PHP:**
+2.  **Install Dependensi**
     ```bash
     composer install
+    npm install
+    npm run build
     ```
 
-3.  **Konfigurasi Lingkungan (.env):**
-    Proyek ini memiliki skrip untuk menyalin `.env.example` ke `.env` secara otomatis. Pastikan Anda membuat database MySQL terlebih dahulu.
-    ```sql
-    CREATE DATABASE location_server CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+3.  **Konfigurasi Environment**
+    ```bash
+    cp .env.example .env
     ```
-    Kemudian, perbarui file `.env` Anda dengan kredensial database yang benar. Pengaturan default yang ada di `SETUP.md` adalah:
-    ```
-    DB_CONNECTION=mysql
-    DB_HOST=127.0.0.1
-    DB_PORT=3306
-    DB_DATABASE=location_server
-    DB_USERNAME=root
-    DB_PASSWORD=
-    ```
-    *Catatan: Sesuaikan `DB_PASSWORD` jika root MySQL Anda memiliki password.*
+    Buka file `.env` dan atur koneksi database Anda (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`).
 
-4.  **Hasilkan Kunci Aplikasi:**
+4.  **Atur Kunci Rahasia**
+    Di file `.env`, atur juga variabel kustom ini untuk API Key:
+    ```env
+    FLUTTER_API_KEY="kunci_rahasia_super_aman_anda"
+    ```
+
+5.  **Generate Kunci & Migrasi**
     ```bash
     php artisan key:generate
+    php artisan migrate --seed
     ```
+    *(Perintah `--seed` akan membuat Admin default, data Lokasi, dan User contoh).*
 
-5.  **Jalankan Migrasi Database:**
-    Perintah ini akan membuat semua tabel yang diperlukan di database Anda.
+6.  **Buat Storage Link (SANGAT PENTING)**
+    Ini wajib agar file `.apk` yang di-upload bisa di-download.
     ```bash
-    php artisan migrate
+    php artisan storage:link
     ```
 
-6.  **Jalankan Seeder (Opsional tapi Direkomendasikan):**
-    Perintah ini akan mengisi database dengan data awal (misalnya, data admin, pengguna, dan lokasi).
-    ```bash
-    php artisan db:seed
-    ```
-
-7.  **Install Dependensi Frontend:**
-    ```bash
-    npm install
-    npm run dev
-    ```
-
-8.  **Jalankan Server Pengembangan:**
+7.  **Jalankan Server**
     ```bash
     php artisan serve
     ```
-    Aplikasi sekarang akan berjalan di `http://127.0.0.1:8000`.
+
+## 🗃️ Struktur Database
+
+* `admins`: Menyimpan data login untuk admin *dashboard* (username, password).
+* `locations`: Menyimpan daftar semua cabang/lokasi (nama lokasi, URL API).
+* `users`: Menyimpan data user aplikasi (email, nama) dan terhubung ke `locations` via `location_id`.
+* `app_versions`: Menyimpan riwayat versi aplikasi `.apk` (version code, version name, path file, release notes).
+
+## 🖥️ Admin Dashboard
+
+* **URL:** `/admin/login`
+* **Admin Default:**
+    * **Email:** `admin@example.com`
+    * **Password:** `password`
+    *(Lihat `database/seeders/AdminSeeder.php` untuk detail)*
+
+Dari *dashboard* ini, Anda bisa mengelola semua data user, lokasi, dan meng-upload versi `.apk` baru melalui menu **"App Updates"**.
+
+## 📡 Spesifikasi API (untuk Klien Flutter)
+
+### 1. Endpoint: Check Lokasi (Publik)
+
+Memberi tahu URL API yang benar berdasarkan email user.
+
+* **URL:** `POST /api/check-location`
+* **Body (JSON):**
+    ```json
+    {
+        "email": "surveyor.jkt@perusahaan.com"
+    }
+    ```
+* **Respons Sukses (200 OK):**
+    ```json
+    {
+        "status": "success",
+        "location": {
+            "id": 1,
+            "location_name": "Jakarta",
+            "online_url": "[https://jkt.web.com](https://jkt.web.com)",
+            "created_at": "...",
+            "updated_at": "..."
+        }
+    }
+    ```
+* **Respons Gagal (404 Not Found):**
+    ```json
+    {
+        "status": "error",
+        "message": "User not found or location not set"
+    }
+    ```
 
 ---
 
-## Susunan Project
+### 2. Endpoint: Check Versi Terbaru (Aman)
 
-Berikut adalah gambaran singkat tentang struktur file dan direktori penting dalam proyek Laravel ini:
+Mendapatkan informasi versi `.apk` terbaru untuk *in-app update*.
 
-* `app/Http/Controllers/Api/LocationController.php`: Mengendalikan logika untuk endpoint API `/api/check-location`.
-* `app/Http/Controllers/AdminAuthController.php`: Mengelola logika login dan logout untuk admin.
-* `app/Http/Controllers/UserController.php`: Mengelola CRUD untuk pengguna di panel admin.
-* `app/Http/Controllers/LocationManagementController.php`: Mengelola CRUD untuk lokasi di panel admin.
-* `app/Services/LocationService.php`: Berisi logika bisnis inti untuk memeriksa lokasi pengguna.
-* `app/Models/`: Berisi model Eloquent (misalnya `User.php`, `Location.php`, `Admin.php`).
-* `routes/api.php`: Mendefinisikan semua rute yang diawali dengan `/api`, termasuk `/check-location`.
-* `routes/web.php`: Mendefinisikan rute untuk aplikasi web, termasuk panel admin (`/admin/*`).
-* `database/migrations/`: Berisi file-file skema database.
-* `database/seeders/`: Berisi file-file untuk mengisi data awal database.
-* `SETUP.md`: Catatan panduan setup yang spesifik untuk proyek ini.
-* `composer.json`: Mendefinisikan dependensi PHP proyek.
-
----
-
-## Contoh Penggunaan
-
-### 1. API (Check Location)
-
-Anda dapat menguji endpoint API menggunakan `curl` atau alat seperti Postman. Endpoint ini menerima metode `GET` atau `POST`.
-
-**Permintaan (Request):**
-```bash
-# Menggunakan GET
-curl "[http://127.0.0.1:8000/api/check-location?email=user@example.com](http://127.0.0.1:8000/api/check-location?email=user@example.com)"
-
-# Menggunakan POST
-curl -X POST [http://127.0.0.1:8000/api/check-location](http://127.0.0.1:8000/api/check-location) \
-     -H "Content-Type: application/json" \
-     -d '{"email": "user@example.com"}'
-````
-
-**Respon Sukses (Success Response):**
-
-```json
-{
-    "success": true,
-    "data": {
-        "user_email": "user@example.com",
-        "location_name": "Nama Lokasi",
-        "status": "allowed"
+* **URL:** `GET /api/latest-version`
+* **Header Wajib:**
+    | Key | Value |
+    | :--- | :--- |
+    | `X-Api-Key` | `nilai_dari_FLUTTER_API_KEY_anda` |
+* **Respons Sukses (200 OK):**
+    ```json
+    {
+        "status": "success",
+        "data": {
+            "version_name": "1.2.0",
+            "version_code": 3,
+            "release_notes": "Perbaikan bug di halaman survey.\nPenambahan fitur foto crani.",
+            "download_url": "[https://locstorage.com/storage/updates/file_apk_acak.apk](https://locstorage.com/storage/updates/file_apk_acak.apk)"
+        }
     }
-}
-```
-
-**Respon Gagal (Error Response - Validasi):**
-
-```json
-{
-    "success": false,
-    "message": "Validation error",
-    "errors": {
-        "email": [
-            "The email field is required."
-        ]
+    ```
+* **Respons Gagal (401 Unauthorized):** (API Key salah/tidak ada)
+    ```json
+    {
+        "message": "Unauthorized"
     }
-}
-```
+    ```
+* **Respons Gagal (404 Not Found):** (Belum ada versi yang di-upload)
+    ```json
+    {
+        "status": "error",
+        "message": "Belum ada versi aplikasi yang tersedia."
+    }
+    ```
 
-### 2\. Panel Admin
+## 🚀 Catatan Deployment (Hostinger)
 
-1.  Akses halaman login admin di browser Anda: `http://127.0.0.1:8000/admin/login`.
-2.  Gunakan kredensial admin (yang mungkin telah dibuat melalui *seeder*) untuk masuk.
-3.  Setelah berhasil login, Anda akan diarahkan ke dashboard (`/admin/dashboard`) di mana Anda dapat mengelola pengguna dan lokasi.
-
------
-
-## Kontribusi
-
-Kami menyambut baik kontribusi\! Jika Anda ingin berkontribusi pada proyek ini, silakan ikuti langkah-langkah berikut:
-
-1.  **Fork** repositori ini.
-2.  Buat *branch* fitur baru (`git checkout -b fitur/nama-fitur`).
-3.  *Commit* perubahan Anda (`git commit -m 'Menambahkan fitur A'`).
-4.  *Push* ke *branch* Anda (`git push origin fitur/nama-fitur`).
-5.  Buka **Pull Request**.
-
------
-
-## Lisensi
-
-Proyek ini dilisensikan di bawah **Lisensi MIT**. Lihat file `LICENSE` untuk detail lebih lanjut.
-
-```
-```
+1.  **Struktur Folder:** Karena *shared hosting* (Hostinger) mengarahkan domain ke *root* (bukan folder `/public`), pastikan Anda memindahkan `index.php`, `.htaccess`, dll. ke *root* dan sesuaikan *path* di `index.php` (hapus `../`).
+2.  **Storage Link:** Setelah deploy, Anda **wajib** menjalankan `php artisan storage:link` melalui Terminal SSH di Hostinger agar URL unduhan `.apk` berfungsi.
+3.  **File Permissions:** Pastikan folder `storage` *writable* oleh server.
