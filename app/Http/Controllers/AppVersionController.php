@@ -128,13 +128,26 @@ class AppVersionController extends Controller
     }
 
     /**
-     * Download the APK file.
+     * Download the APK file (admin only).
      */
     public function download(AppVersion $appVersion)
     {
         if (!Storage::exists($appVersion->file_path)) {
             return redirect()->back()
                 ->with('error', 'APK file not found');
+        }
+
+        $fileName = "app-v{$appVersion->version_name}.apk";
+        return Storage::download($appVersion->file_path, $fileName);
+    }
+
+    /**
+     * Public download the APK file (no authentication required).
+     */
+    public function publicDownload(AppVersion $appVersion)
+    {
+        if (!Storage::exists($appVersion->file_path)) {
+            abort(404, 'APK file not found');
         }
 
         $fileName = "app-v{$appVersion->version_name}.apk";

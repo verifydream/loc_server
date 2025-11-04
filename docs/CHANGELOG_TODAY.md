@@ -299,6 +299,68 @@ Route::get('app-versions/{appVersion}/download', [AppVersionController::class, '
 
 ---
 
+### 7. 🔧 Fix APK Download URL (Public Access)
+**Problem:** 
+- API mengembalikan URL storage: `/storage/updates/app-v1.0.2.apk`
+- Download admin perlu login: `/admin/app-versions/5/download`
+- Flutter tidak bisa download APK karena perlu login
+
+**Solution:**
+- ✅ Buat route publik baru: `/download/apk/{id}`
+- ✅ Tambah method `publicDownload()` di controller (tanpa auth)
+- ✅ Update API response untuk return URL publik yang benar
+- ✅ Update dokumentasi API dengan URL baru
+- ✅ Buat file `APK_DOWNLOAD_FIX.md` untuk dokumentasi fix
+
+**Result:** 
+- ✅ Flutter bisa download APK langsung tanpa login
+- ✅ URL konsisten: `http://localhost:8000/download/apk/5`
+- ✅ File auto-download dengan nama yang sesuai
+
+**Files Modified:**
+- `app/Http/Controllers/Api/VersionController.php` - Update download URL
+- `app/Http/Controllers/AppVersionController.php` - Add publicDownload method
+- `routes/web.php` - Add public download route
+- `docs/API_DOCUMENTATION.md` - Update download URL info
+
+**Files Created:**
+- `docs/APK_DOWNLOAD_FIX.md` - Dokumentasi lengkap fix
+- `test-api-download.http` - File test API
+
+---
+
+### 8. 🔧 Fix Button Download di Admin Panel
+**Problem:** 
+- Button download di dashboard, index, dan show masih menggunakan route admin
+- Route admin memerlukan login: `/admin/app-versions/3/download`
+- Tidak konsisten dengan API yang sudah publik
+
+**Solution:**
+- ✅ Update semua button download untuk menggunakan route publik `apk.download`
+- ✅ Tambah `target="_blank"` agar download dibuka di tab baru
+- ✅ Sekarang semua button download menggunakan: `/download/apk/3`
+- ✅ Link download bisa dibagikan tanpa perlu login
+
+**Result:** 
+- ✅ Button download di dashboard tidak perlu login
+- ✅ Button download di index tidak perlu login
+- ✅ Button download di show tidak perlu login
+- ✅ Link download bisa dibagikan ke user lain
+
+**Files Modified:**
+- `resources/views/admin/dashboard.blade.php` - Update download button
+- `resources/views/admin/app-versions/index.blade.php` - Update download button
+- `resources/views/admin/app-versions/show.blade.php` - Update download button
+
+**Files Created:**
+- `docs/BUTTON_DOWNLOAD_FIX.md` - Dokumentasi fix button download
+- `docs/HOSTING_SETUP.md` - Panduan setup hosting
+- `docs/TESTING_RESULTS.md` - Hasil testing lengkap
+- `test-route.php` - Script test route accessibility
+- `test-public-download.html` - HTML test page
+
+---
+
 ## 🚀 Next Steps
 
 ### Untuk Testing API:

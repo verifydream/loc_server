@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Public APK Download</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .test-section {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+        a {
+            display: inline-block;
+            margin: 10px 0;
+            padding: 10px 20px;
+            background: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        a:hover {
+            background: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Public APK Download</h1>
+    <p>File ini untuk test apakah download APK bisa diakses tanpa login admin.</p>
+
+    <div class="test-section">
+        <h2>Test 1: Direct Link Download</h2>
+        <p>Klik link di bawah untuk download APK langsung (tanpa login):</p>
+        <a href="http://localhost:8000/download/apk/3" target="_blank">
+            📥 Download APK (ID: 3)
+        </a>
+        <p><small>Jika file langsung terdownload = ✅ Berhasil<br>Jika redirect ke login = ❌ Masih ada masalah</small></p>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 2: API Check</h2>
+        <p>Test API untuk mendapatkan download URL:</p>
+        <button onclick="testAPI()">🔍 Test API Latest Version</button>
+        <div id="apiResult" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 3: Download via JavaScript</h2>
+        <p>Simulasi download seperti di Flutter:</p>
+        <button onclick="downloadAPK()">📲 Download APK via JS</button>
+        <div id="downloadResult" class="result" style="display:none;"></div>
+    </div>
+
+    <script>
+        async function testAPI() {
+            const resultDiv = document.getElementById('apiResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '⏳ Loading...';
+
+            try {
+                const response = await fetch('http://localhost:8000/api/latest-version', {
+                    headers: {
+                        'X-Api-Key': '2yVrUCjQLo4S81l4cZkAaC5UaHbKLTaZ8fJ5p4eh0HLDckP19DNgAg3NHW6YC6Kt',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h3>✅ API Response Success!</h3>
+                            <p><strong>Version:</strong> ${data.data.version_name} (${data.data.version_code})</p>
+                            <p><strong>Download URL:</strong> <a href="${data.data.download_url}" target="_blank">${data.data.download_url}</a></p>
+                            <p><strong>Release Notes:</strong> ${data.data.release_notes || 'N/A'}</p>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ Error: ${data.message}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function downloadAPK() {
+            const resultDiv = document.getElementById('downloadResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '⏳ Fetching download URL...';
+
+            try {
+                // Get download URL from API
+                const response = await fetch('http://localhost:8000/api/latest-version', {
+                    headers: {
+                        'X-Api-Key': '2yVrUCjQLo4S81l4cZkAaC5UaHbKLTaZ8fJ5p4eh0HLDckP19DNgAg3NHW6YC6Kt',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    const downloadUrl = data.data.download_url;
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h3>✅ Download URL Found!</h3>
+                            <p>Opening download link...</p>
+                            <p><a href="${downloadUrl}" target="_blank">Click here if download doesn't start</a></p>
+                        </div>
+                    `;
+                    
+                    // Open download URL in new tab
+                    window.open(downloadUrl, '_blank');
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ Error: ${data.message}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

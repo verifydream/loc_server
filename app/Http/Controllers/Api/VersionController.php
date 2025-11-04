@@ -28,8 +28,8 @@ class VersionController extends Controller
                 ], 404);
             }
 
-            // Generate download URL using Storage facade
-            $downloadUrl = Storage::url($version->file_path);
+            // Generate public download URL
+            $downloadUrl = route('apk.download', ['appVersion' => $version->id]);
 
             // Return success response with version details
             return response()->json([

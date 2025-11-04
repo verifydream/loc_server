@@ -188,10 +188,12 @@ Tidak ada body (GET request)
     "version_name": "1.0.0",
     "version_code": 1,
     "release_notes": "- Initial release\n- Bug fixes\n- Performance improvements",
-    "download_url": "/storage/updates/app-v1.0.0.apk"
+    "download_url": "http://localhost:8000/download/apk/1"
   }
 }
 ```
+
+**Note:** `download_url` adalah URL publik yang bisa diakses langsung tanpa autentikasi untuk download APK.
 
 #### Error Responses
 
@@ -411,9 +413,10 @@ Gunakan `{{base_url}}` dan `{{api_key}}` di request Anda.
    - Ganti API Key secara berkala
 
 2. **Download URL:**
-   - URL download APK adalah relative path
-   - Full URL: `http://your-domain.com/storage/updates/filename.apk`
-   - Pastikan symbolic link storage sudah dibuat: `php artisan storage:link`
+   - URL download APK adalah public route yang bisa diakses tanpa login
+   - Format: `http://your-domain.com/download/apk/{id}`
+   - File APK akan otomatis terdownload dengan nama yang sesuai
+   - Tidak perlu autentikasi atau API key untuk download
 
 3. **Testing Tips:**
    - Gunakan Postman Collection untuk save semua test cases

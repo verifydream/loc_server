@@ -46,8 +46,8 @@
                                                class="btn btn-sm btn-info" title="View Details">
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            <a href="{{ route('admin.app-versions.download', $version->id) }}" 
-                                               class="btn btn-sm btn-success" title="Download APK">
+                                            <a href="{{ route('apk.download', $version->id) }}" 
+                                               class="btn btn-sm btn-success" title="Download APK" target="_blank">
                                                 <i class="bi bi-download"></i>
                                             </a>
                                             <a href="{{ route('admin.app-versions.edit', $version->id) }}" 

@@ -79,8 +79,8 @@
                 </div>
                 <div class="card-body">
                     <div class="d-grid gap-2">
-                        <a href="{{ route('admin.app-versions.download', $appVersion->id) }}" 
-                           class="btn btn-success">
+                        <a href="{{ route('apk.download', $appVersion->id) }}" 
+                           class="btn btn-success" target="_blank">
                             <i class="bi bi-download"></i> Download APK
                         </a>
                         <a href="{{ route('admin.app-versions.edit', $appVersion->id) }}" 
@@ -103,7 +103,7 @@
                 <div class="card-body">
                     <p class="small mb-2">Check for updates:</p>
                     <code class="d-block p-2 bg-light rounded small">
-                        GET {{ url('/api/version/check') }}
+                        GET {{ url('/api/latest-version') }}
                     </code>
                 </div>
             </div>

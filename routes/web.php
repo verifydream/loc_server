@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Public APK Download Route (no authentication required)
+Route::get('/download/apk/{appVersion}', [App\Http\Controllers\AppVersionController::class, 'publicDownload'])
+    ->name('apk.download');
+
 // Admin Authentication Routes
 Route::get('/admin/login', [App\Http\Controllers\AdminAuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [App\Http\Controllers\AdminAuthController::class, 'login'])->name('admin.login.submit');

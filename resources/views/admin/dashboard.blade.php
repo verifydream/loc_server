@@ -123,7 +123,7 @@
                                 <a href="{{ route('admin.app-versions.show', $latestVersion->id) }}" class="btn btn-info">
                                     <i class="bi bi-eye"></i> View Details
                                 </a>
-                                <a href="{{ route('admin.app-versions.download', $latestVersion->id) }}" class="btn btn-success">
+                                <a href="{{ route('apk.download', $latestVersion->id) }}" class="btn btn-success" target="_blank">
                                     <i class="bi bi-download"></i> Download APK
                                 </a>
                                 <a href="{{ route('admin.app-versions.create') }}" class="btn btn-primary">

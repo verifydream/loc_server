@@ -1,0 +1,12 @@
+### Test Latest Version API
+GET http://localhost:8000/api/latest-version
+X-Api-Key: 2yVrUCjQLo4S81l4cZkAaC5UaHbKLTaZ8fJ5p4eh0HLDckP19DNgAg3NHW6YC6Kt
+Accept: application/json
+
+###
+
+### Test Public Download (ganti {id} dengan ID yang valid)
+### Contoh: GET http://localhost:8000/download/apk/5
+GET http://localhost:8000/download/apk/1
+
+###

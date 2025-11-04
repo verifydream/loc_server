@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 03, 2025 at 09:27 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Waktu pembuatan: 04 Nov 2025 pada 08.44
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admins`
+-- Struktur dari tabel `admins`
 --
 
 CREATE TABLE `admins` (
@@ -38,7 +38,7 @@ CREATE TABLE `admins` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `admins`
+-- Dumping data untuk tabel `admins`
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
@@ -47,7 +47,32 @@ INSERT INTO `admins` (`id`, `name`, `email`, `password`, `remember_token`, `crea
 -- --------------------------------------------------------
 
 --
--- Table structure for table `failed_jobs`
+-- Struktur dari tabel `app_versions`
+--
+
+CREATE TABLE `app_versions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `version_name` varchar(255) NOT NULL,
+  `version_code` int(11) NOT NULL,
+  `file_path` varchar(255) NOT NULL,
+  `release_notes` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `app_versions`
+--
+
+INSERT INTO `app_versions` (`id`, `version_name`, `version_code`, `file_path`, `release_notes`, `created_at`, `updated_at`) VALUES
+(1, '1.0.0', 1, 'public/updates/WCeyD1vGFtCU1u7XA6T0KeOpYnH0br7J75n1HV4h.zip', 'test', '2025-11-03 23:26:37', '2025-11-03 23:26:37'),
+(2, '1.0.1', 2, 'public/updates/4YScLhvHimgbMcoSDr3gQ5o6CP1gYlQijPtJPQ80.zip', 'test 2', '2025-11-03 23:28:23', '2025-11-03 23:28:23'),
+(3, '1.0.2', 3, 'public/updates/app-v1.0.2-1762239609.apk', 'asd as sda', '2025-11-04 07:00:10', '2025-11-04 07:00:10');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `failed_jobs`
 --
 
 CREATE TABLE `failed_jobs` (
@@ -63,7 +88,7 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `locations`
+-- Struktur dari tabel `locations`
 --
 
 CREATE TABLE `locations` (
@@ -76,7 +101,7 @@ CREATE TABLE `locations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `locations`
+-- Dumping data untuk tabel `locations`
 --
 
 INSERT INTO `locations` (`id`, `location_code`, `location_name`, `online_url`, `created_at`, `updated_at`) VALUES
@@ -92,7 +117,7 @@ INSERT INTO `locations` (`id`, `location_code`, `location_name`, `online_url`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
+-- Struktur dari tabel `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -102,7 +127,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `migrations`
+-- Dumping data untuk tabel `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -111,12 +136,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (3, '2014_10_12_100000_create_password_reset_tokens_table', 1),
 (4, '2014_10_13_000000_create_admins_table', 1),
 (5, '2019_08_19_000000_create_failed_jobs_table', 1),
-(6, '2019_12_14_000001_create_personal_access_tokens_table', 1);
+(6, '2019_12_14_000001_create_personal_access_tokens_table', 1),
+(7, '2025_11_04_054436_create_app_versions_table', 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `password_reset_tokens`
+-- Struktur dari tabel `password_reset_tokens`
 --
 
 CREATE TABLE `password_reset_tokens` (
@@ -128,7 +154,7 @@ CREATE TABLE `password_reset_tokens` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `personal_access_tokens`
+-- Struktur dari tabel `personal_access_tokens`
 --
 
 CREATE TABLE `personal_access_tokens` (
@@ -147,7 +173,7 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
@@ -160,7 +186,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Dumping data untuk tabel `users`
 --
 
 INSERT INTO `users` (`id`, `email`, `location_id`, `status`, `created_at`, `updated_at`) VALUES
@@ -186,7 +212,7 @@ INSERT INTO `users` (`id`, `email`, `location_id`, `status`, `created_at`, `upda
 --
 
 --
--- Indexes for table `admins`
+-- Indeks untuk tabel `admins`
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`),
@@ -194,14 +220,21 @@ ALTER TABLE `admins`
   ADD KEY `admins_email_index` (`email`);
 
 --
--- Indexes for table `failed_jobs`
+-- Indeks untuk tabel `app_versions`
+--
+ALTER TABLE `app_versions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `app_versions_version_code_unique` (`version_code`);
+
+--
+-- Indeks untuk tabel `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
--- Indexes for table `locations`
+-- Indeks untuk tabel `locations`
 --
 ALTER TABLE `locations`
   ADD PRIMARY KEY (`id`),
@@ -209,19 +242,19 @@ ALTER TABLE `locations`
   ADD KEY `locations_location_code_index` (`location_code`);
 
 --
--- Indexes for table `migrations`
+-- Indeks untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `password_reset_tokens`
+-- Indeks untuk tabel `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
--- Indexes for table `personal_access_tokens`
+-- Indeks untuk tabel `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
@@ -229,7 +262,7 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
--- Indexes for table `users`
+-- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
@@ -239,51 +272,57 @@ ALTER TABLE `users`
   ADD KEY `users_status_index` (`status`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `admins`
+-- AUTO_INCREMENT untuk tabel `admins`
 --
 ALTER TABLE `admins`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `failed_jobs`
+-- AUTO_INCREMENT untuk tabel `app_versions`
+--
+ALTER TABLE `app_versions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `locations`
+-- AUTO_INCREMENT untuk tabel `locations`
 --
 ALTER TABLE `locations`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `migrations`
+-- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `personal_access_tokens`
+-- AUTO_INCREMENT untuk tabel `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `users`
+-- Ketidakleluasaan untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_location_id_foreign` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`);
