@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Location;
+use App\Models\AppVersion;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -18,12 +19,18 @@ class DashboardController extends Controller
         $activeUsers = User::where('status', 'active')->count();
         $inactiveUsers = User::where('status', 'inactive')->count();
         $totalLocations = Location::count();
+        
+        // Get latest app version
+        $latestVersion = AppVersion::latest()->first();
+        $totalVersions = AppVersion::count();
 
         return view('admin.dashboard', compact(
             'totalUsers',
             'activeUsers',
             'inactiveUsers',
-            'totalLocations'
+            'totalLocations',
+            'latestVersion',
+            'totalVersions'
         ));
     }
 }

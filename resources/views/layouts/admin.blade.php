@@ -206,6 +206,12 @@
                         Locations
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.app-versions.*') ? 'active' : '' }}" href="{{ route('admin.app-versions.index') }}">
+                        <i class="bi bi-phone-fill"></i>
+                        App Updates
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>

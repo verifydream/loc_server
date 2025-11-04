@@ -32,4 +32,9 @@ Route::middleware(['admin.auth'])->prefix('admin')->name('admin.')->group(functi
     
     // Location Management Routes
     Route::resource('locations', App\Http\Controllers\LocationManagementController::class);
+    
+    // App Version Management Routes
+    Route::resource('app-versions', App\Http\Controllers\AppVersionController::class);
+    Route::get('app-versions/{appVersion}/download', [App\Http\Controllers\AppVersionController::class, 'download'])
+        ->name('app-versions.download');
 });

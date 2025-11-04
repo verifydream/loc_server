@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\LocationController;
+use App\Http\Controllers\Api\VersionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,8 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Location Server API
-Route::middleware(['throttle:60,1', 'log.api'])->group(function () {
+// Location Server API and App Version API
+Route::middleware(['throttle:60,1', 'log.api', 'auth.apikey'])->group(function () {
     Route::post('/check-location', [LocationController::class, 'checkLocation']);
     Route::get('/check-location', [LocationController::class, 'checkLocation']);
+    Route::get('/latest-version', [VersionController::class, 'getLatestVersion']);
 });
