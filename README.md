@@ -14,6 +14,7 @@ Proyek backend Laravel ini berfungsi sebagai *server* pendukung untuk aplikasi m
     * **Manajemen Lokasi:** CRUD untuk semua cabang perusahaan (Surabaya, Jakarta, Belawan, dll) beserta URL API unik mereka.
     * **Manajemen User:** CRUD untuk user aplikasi (tim Survey & Crani), menautkan mereka ke lokasi cabang yang sesuai.
     * **Manajemen Versi Aplikasi:** Halaman untuk meng-upload file `.apk` baru, mencatat *version code*, dan *release notes*.
+    * **Upload Progress Bar:** Real-time progress tracking saat upload APK dengan informasi kecepatan dan ETA.
 * **API Resolver Lokasi:** Satu API publik (`/api/check-location`) untuk memvalidasi email dan mengembalikan URL API yang benar.
 * **API In-App Update:** Satu API aman (`/api/latest-version`) yang mengembalikan data versi `.apk` terbaru dan URL unduhan.
 * **Keamanan API:** Endpoint *In-App Update* dilindungi menggunakan *middleware* `X-Api-Key` kustom.

@@ -211,7 +211,7 @@ $validated = $request->validate([
     'version_name' => 'required|string|max:255',
     'version_code' => 'required|integer|unique:app_versions,version_code',
     'release_notes' => 'nullable|string',
-    'apk_file' => 'required|file|mimes:apk|max:102400', // 100MB max
+    'apk_file' => 'required|file|mimes:apk|max:102400', // 150MB max
 ]);
 ```
 
@@ -384,7 +384,7 @@ resources/views/admin/app-versions/
 | Validation failure | Redirect back with errors and old input |
 | Duplicate version_code | Validation error: "Version code already exists" |
 | Invalid file type | Validation error: "File must be an APK" |
-| File too large | Validation error: "File size exceeds 100MB" |
+| File too large | Validation error: "File size exceeds 150MB" |
 | Storage failure | Catch exception, show error message |
 | File not found on delete | Silent handling, still delete record |
 
@@ -438,7 +438,7 @@ $appVersion->delete();
 
 2. **File Upload Security**
    - MIME type validation (apk only)
-   - File size limit (100MB)
+   - File size limit (150MB)
    - Store in non-public directory initially, serve via Storage::url()
 
 3. **CSRF Protection**
@@ -485,12 +485,12 @@ This creates: `public/storage` → `storage/app/public`
 
 **PHP Configuration (php.ini):**
 ```ini
-upload_max_filesize = 100M
-post_max_size = 100M
+upload_max_filesize = 150M
+post_max_size = 150M
 ```
 
 **Laravel Configuration:**
-- Validation rule: `max:102400` (100MB in KB)
+- Validation rule: `max:102400` (150MB in KB)
 
 ## Testing Strategy
 
