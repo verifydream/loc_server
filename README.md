@@ -14,16 +14,15 @@ Proyek backend Laravel ini berfungsi sebagai *server* pendukung untuk aplikasi m
     * **Manajemen Lokasi:** CRUD untuk semua cabang perusahaan (Surabaya, Jakarta, Belawan, dll) beserta URL API unik mereka.
     * **Manajemen User:** CRUD untuk user aplikasi (tim Survey & Crani), menautkan mereka ke lokasi cabang yang sesuai.
     * **Manajemen Versi Aplikasi:** Halaman untuk meng-upload file `.apk` baru, mencatat *version code*, dan *release notes*.
-    * **Upload Progress Bar:** Real-time progress tracking saat upload APK dengan informasi kecepatan dan ETA.
 * **API Resolver Lokasi:** Satu API publik (`/api/check-location`) untuk memvalidasi email dan mengembalikan URL API yang benar.
-* **API In-App Update:** Satu API aman (`/api/latest-version`) yang mengembalikan data versi `.apk` terbaru dan URL unduhan.
+* **API In-App Update:** Satu API aman (`/api/latest-version`) yang mengembalikan data versi `.apk` terbaru dan URL unduhan yang dinamis.
 * **Keamanan API:** Endpoint *In-App Update* dilindungi menggunakan *middleware* `X-Api-Key` kustom.
 
 ## ⚙️ Instalasi & Setup (Lokal)
 
 1.  **Clone Repository**
     ```bash
-    git clone [URL_REPO_ANDA]
+    git clone [https://github.com/verifydream/loc_server.git](https://github.com/verifydream/loc_server.git)
     cd loc_server
     ```
 
@@ -53,8 +52,8 @@ Proyek backend Laravel ini berfungsi sebagai *server* pendukung untuk aplikasi m
     ```
     *(Perintah `--seed` akan membuat Admin default, data Lokasi, dan User contoh).*
 
-6.  **Buat Storage Link (SANGAT PENTING)**
-    Ini wajib agar file `.apk` yang di-upload bisa di-download.
+6.  **Buat Storage Link**
+    Meskipun *download* APK utama menggunakan *route* dinamis, `storage:link` tetap penting untuk file lain (jika ada).
     ```bash
     php artisan storage:link
     ```
@@ -131,10 +130,12 @@ Mendapatkan informasi versi `.apk` terbaru untuk *in-app update*.
     {
         "status": "success",
         "data": {
-            "version_name": "1.2.0",
+            "id": 5,
+            "version_name": "1.0.2",
             "version_code": 3,
-            "release_notes": "Perbaikan bug di halaman survey.\nPenambahan fitur foto crani.",
-            "download_url": "[https://locstorage.com/storage/updates/file_apk_acak.apk](https://locstorage.com/storage/updates/file_apk_acak.apk)"
+            "release_notes": "Perbaikan bug minor.",
+            "file_name": "app-v1.0.2.apk",
+            "download_url": "[https://depoverse.ppzaidbintsabit.com/download/apk/5](https://depoverse.ppzaidbintsabit.com/download/apk/5)"
         }
     }
     ```
@@ -152,8 +153,17 @@ Mendapatkan informasi versi `.apk` terbaru untuk *in-app update*.
     }
     ```
 
+---
+
+### 3. Endpoint: Download APK (Publik)
+
+*Route* publik yang ditunjuk oleh `download_url` dari API di atas. *Route* ini akan memicu *download* file `.apk` secara paksa.
+
+* **URL:** `GET /download/apk/{id}`
+* **Contoh Panggilan:** `httpsE://depoverse.ppzaidbintsabit.com/download/apk/5`
+* **Respons Sukses:** Server akan mengirimkan file `app-v1.0.2.apk` (atau nama file yang sesuai) sebagai *attachment* untuk di-download.
+
 ## 🚀 Catatan Deployment (Hostinger)
 
 1.  **Struktur Folder:** Karena *shared hosting* (Hostinger) mengarahkan domain ke *root* (bukan folder `/public`), pastikan Anda memindahkan `index.php`, `.htaccess`, dll. ke *root* dan sesuaikan *path* di `index.php` (hapus `../`).
-2.  **Storage Link:** Setelah deploy, Anda **wajib** menjalankan `php artisan storage:link` melalui Terminal SSH di Hostinger agar URL unduhan `.apk` berfungsi.
-3.  **File Permissions:** Pastikan folder `storage` *writable* oleh server.
+2.  **File Permissions:** Pastikan folder `storage` *writable* oleh server agar *upload* `.apk` berhasil.
