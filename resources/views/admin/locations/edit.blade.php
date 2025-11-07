@@ -20,7 +20,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('admin.locations.update', $location->id) }}" method="POST">
+            <form action="{{ route('admin.locations.update', $location->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -66,6 +66,28 @@
                            required>
                     <small class="form-text text-muted">Full URL for the location's API server</small>
                     @error('online_url')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="logo" class="form-label">Location Logo</label>
+                    @if($location->logo)
+                        <div class="mb-2">
+                            <img src="{{ asset('storage/location-logos/' . $location->logo) }}" 
+                                 alt="Current Logo" 
+                                 style="max-width: 200px; max-height: 100px; object-fit: contain;"
+                                 class="border rounded p-2">
+                            <p class="text-muted small mb-0">Current logo</p>
+                        </div>
+                    @endif
+                    <input type="file" 
+                           class="form-control @error('logo') is-invalid @enderror" 
+                           id="logo" 
+                           name="logo"
+                           accept="image/jpeg,image/jpg,image/png,image/gif,image/svg+xml">
+                    <small class="form-text text-muted">Optional. Leave empty to keep current logo. Accepted formats: JPEG, JPG, PNG, GIF, SVG (Max: 2MB)</small>
+                    @error('logo')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>

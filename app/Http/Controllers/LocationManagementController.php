@@ -41,6 +41,7 @@ class LocationManagementController extends Controller
             'location_code' => 'required|unique:locations,location_code|max:10',
             'location_name' => 'required|max:100',
             'online_url' => 'required|url',
+            'logo' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
         ], [
             'location_code.required' => 'Location code is required',
             'location_code.unique' => 'Location code already exists',
@@ -49,10 +50,13 @@ class LocationManagementController extends Controller
             'location_name.max' => 'Location name must not exceed 100 characters',
             'online_url.required' => 'Online URL is required',
             'online_url.url' => 'Invalid URL format',
+            'logo.image' => 'Logo must be an image file',
+            'logo.mimes' => 'Logo must be a file of type: jpeg, jpg, png, gif, svg',
+            'logo.max' => 'Logo size must not exceed 2MB',
         ]);
 
         try {
-            $this->locationManagementService->createLocation($validated);
+            $this->locationManagementService->createLocation($validated, $request->file('logo'));
             return redirect()->route('admin.locations.index')->with('success', 'Location created successfully');
         } catch (\Exception $e) {
             return back()->withInput()->with('error', 'Failed to create location: ' . $e->getMessage());
@@ -76,6 +80,7 @@ class LocationManagementController extends Controller
             'location_code' => 'required|unique:locations,location_code,' . $location->id . '|max:10',
             'location_name' => 'required|max:100',
             'online_url' => 'required|url',
+            'logo' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
         ], [
             'location_code.required' => 'Location code is required',
             'location_code.unique' => 'Location code already exists',
@@ -84,10 +89,13 @@ class LocationManagementController extends Controller
             'location_name.max' => 'Location name must not exceed 100 characters',
             'online_url.required' => 'Online URL is required',
             'online_url.url' => 'Invalid URL format',
+            'logo.image' => 'Logo must be an image file',
+            'logo.mimes' => 'Logo must be a file of type: jpeg, jpg, png, gif, svg',
+            'logo.max' => 'Logo size must not exceed 2MB',
         ]);
 
         try {
-            $this->locationManagementService->updateLocation($location, $validated);
+            $this->locationManagementService->updateLocation($location, $validated, $request->file('logo'));
             return redirect()->route('admin.locations.index')->with('success', 'Location updated successfully');
         } catch (\Exception $e) {
             return back()->withInput()->with('error', 'Failed to update location: ' . $e->getMessage());

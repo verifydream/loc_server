@@ -33,6 +33,7 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
+                                <th>Logo</th>
                                 <th>Location Code</th>
                                 <th>Location Name</th>
                                 <th>Online URL</th>
@@ -42,6 +43,15 @@
                         <tbody>
                             @foreach($locations as $location)
                                 <tr>
+                                    <td>
+                                        @if($location->logo)
+                                            <img src="{{ asset('storage/location-logos/' . $location->logo) }}" 
+                                                 alt="{{ $location->location_name }}" 
+                                                 style="max-width: 60px; max-height: 40px; object-fit: contain;">
+                                        @else
+                                            <span class="text-muted small">No logo</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $location->location_code }}</td>
                                     <td>{{ $location->location_name }}</td>
                                     <td>{{ $location->online_url }}</td>

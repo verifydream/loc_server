@@ -33,11 +33,16 @@ class LocationService
             throw new \Exception('User is inactive', 403);
         }
 
+        $locationLogo = $user->location->logo 
+            ? url('storage/location-logos/' . $user->location->logo)
+            : null;
+
         return [
             'email' => $user->email,
             'online_url' => $user->location->online_url,
             'location_name' => $user->location->location_name,
             'location_code' => $user->location->location_code,
+            'location_logo' => $locationLogo,
         ];
     }
 

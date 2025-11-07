@@ -20,10 +20,11 @@ class LocationManagementService
      * Create a new location with validation.
      *
      * @param array $data
+     * @param \Illuminate\Http\UploadedFile|null $logoFile
      * @return Location
      * @throws ValidationException
      */
-    public function createLocation(array $data): Location
+    public function createLocation(array $data, $logoFile = null): Location
     {
         $validator = Validator::make($data, [
             'location_code' => 'required|unique:locations,location_code|max:10',
@@ -35,7 +36,16 @@ class LocationManagementService
             throw new ValidationException($validator);
         }
 
-        return $this->locationRepository->create($validator->validated());
+        $validatedData = $validator->validated();
+
+        // Handle logo upload
+        if ($logoFile) {
+            $logoName = time() . '_' . $data['location_code'] . '.' . $logoFile->getClientOriginalExtension();
+            $logoFile->move(public_path('storage/location-logos'), $logoName);
+            $validatedData['logo'] = $logoName;
+        }
+
+        return $this->locationRepository->create($validatedData);
     }
 
     /**
@@ -43,10 +53,11 @@ class LocationManagementService
      *
      * @param Location $location
      * @param array $data
+     * @param \Illuminate\Http\UploadedFile|null $logoFile
      * @return Location
      * @throws ValidationException
      */
-    public function updateLocation(Location $location, array $data): Location
+    public function updateLocation(Location $location, array $data, $logoFile = null): Location
     {
         $validator = Validator::make($data, [
             'location_code' => 'required|unique:locations,location_code,' . $location->id . '|max:10',
@@ -58,7 +69,21 @@ class LocationManagementService
             throw new ValidationException($validator);
         }
 
-        return $this->locationRepository->update($location, $validator->validated());
+        $validatedData = $validator->validated();
+
+        // Handle logo upload
+        if ($logoFile) {
+            // Delete old logo if exists
+            if ($location->logo && file_exists(public_path('storage/location-logos/' . $location->logo))) {
+                unlink(public_path('storage/location-logos/' . $location->logo));
+            }
+
+            $logoName = time() . '_' . $data['location_code'] . '.' . $logoFile->getClientOriginalExtension();
+            $logoFile->move(public_path('storage/location-logos'), $logoName);
+            $validatedData['logo'] = $logoName;
+        }
+
+        return $this->locationRepository->update($location, $validatedData);
     }
 
     /**

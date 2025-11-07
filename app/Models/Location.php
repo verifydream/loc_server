@@ -18,6 +18,7 @@ class Location extends Model
         'location_code',
         'location_name',
         'online_url',
+        'logo',
     ];
 
     /**
