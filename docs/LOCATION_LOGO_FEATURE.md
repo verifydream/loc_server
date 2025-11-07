@@ -41,7 +41,7 @@ Endpoint: `POST /api/check-location`
     "online_url": "https://dev.mydeposys.com",
     "location_name": "Dev",
     "location_code": "dev",
-    "location_logo": "http://localhost:8000/storage/location-logos/1699356789_dev.png"
+    "location_logo": "http://localhost:8000/storage/location-logos/1762480440_dev.png"
   }
 }
 ```
@@ -74,6 +74,11 @@ Logo dapat diakses langsung melalui URL tanpa autentikasi:
 ```
 http://localhost:8000/storage/location-logos/{filename}
 ```
+
+**Note:** 
+- Di localhost dengan `php artisan serve`: URL adalah `/storage/location-logos/`
+- Di hosting dengan document root di `/public`: URL tetap `/storage/location-logos/` (Laravel akan resolve ke `/public/storage/location-logos/`)
+- File fisik disimpan di `public/storage/location-logos/`
 
 ## Files Modified
 1. `database/migrations/2025_11_07_084504_add_logo_to_locations_table.php` - Migration untuk kolom logo
