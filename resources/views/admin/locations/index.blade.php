@@ -45,7 +45,7 @@
                                 <tr>
                                     <td>
                                         @if($location->logo)
-                                            <img src="{{ asset('storage/location-logos/' . $location->logo) }}" 
+                                            <img src="{{ url('public/storage/location-logos/' . $location->logo) }}" 
                                                  alt="{{ $location->location_name }}" 
                                                  style="max-width: 60px; max-height: 40px; object-fit: contain;">
                                         @else

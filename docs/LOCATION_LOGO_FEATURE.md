@@ -41,7 +41,7 @@ Endpoint: `POST /api/check-location`
     "online_url": "https://dev.mydeposys.com",
     "location_name": "Dev",
     "location_code": "dev",
-    "location_logo": "http://localhost:8000/storage/location-logos/1762480440_dev.png"
+    "location_logo": "http://localhost:8000/public/storage/location-logos/1762480440_dev.png"
   }
 }
 ```
@@ -72,23 +72,27 @@ Endpoint: `POST /api/check-location`
 ### Public Access
 Logo dapat diakses langsung melalui URL tanpa autentikasi:
 ```
-http://localhost:8000/storage/location-logos/{filename}
+http://localhost:8000/public/storage/location-logos/{filename}
 ```
 
 **Note:** 
-- Di localhost dengan `php artisan serve`: URL adalah `/storage/location-logos/`
-- Di hosting dengan document root di `/public`: URL tetap `/storage/location-logos/` (Laravel akan resolve ke `/public/storage/location-logos/`)
-- File fisik disimpan di `public/storage/location-logos/`
+- URL path: `/public/storage/location-logos/` (sama untuk localhost & hosting)
+- File fisik disimpan di: `public/storage/location-logos/`
+- Di localhost: Menggunakan Laravel route untuk serve file
+- Di hosting: Menggunakan .htaccess rewrite rule untuk serve file
+- Konsisten antara localhost dan hosting environment
 
 ## Files Modified
 1. `database/migrations/2025_11_07_084504_add_logo_to_locations_table.php` - Migration untuk kolom logo
 2. `app/Models/Location.php` - Tambah 'logo' ke fillable
-3. `app/Services/LocationService.php` - Include logo URL di API response
+3. `app/Services/LocationService.php` - Include logo URL di API response (path: `/public/storage/location-logos/`)
 4. `app/Services/LocationManagementService.php` - Handle upload logo
 5. `app/Http/Controllers/LocationManagementController.php` - Validasi upload logo
 6. `resources/views/admin/locations/create.blade.php` - Form upload logo
 7. `resources/views/admin/locations/edit.blade.php` - Form upload logo dengan preview
 8. `resources/views/admin/locations/index.blade.php` - Tampilkan logo di tabel
+9. `routes/web.php` - Route untuk serve logo di localhost
+10. `.htaccess` - Rewrite rule untuk serve logo di hosting
 
 ## Notes
 - Logo bersifat opsional, location dapat dibuat tanpa logo

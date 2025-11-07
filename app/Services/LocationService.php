@@ -34,7 +34,7 @@ class LocationService
         }
 
         $locationLogo = $user->location->logo 
-            ? url('/storage/location-logos/' . $user->location->logo)
+            ? url('/public/storage/location-logos/' . $user->location->logo)
             : null;
 
         return [

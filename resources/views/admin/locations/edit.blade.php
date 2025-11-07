@@ -74,7 +74,7 @@
                     <label for="logo" class="form-label">Location Logo</label>
                     @if($location->logo)
                         <div class="mb-2">
-                            <img src="{{ asset('storage/location-logos/' . $location->logo) }}" 
+                            <img src="{{ url('public/storage/location-logos/' . $location->logo) }}" 
                                  alt="Current Logo" 
                                  style="max-width: 200px; max-height: 100px; object-fit: contain;"
                                  class="border rounded p-2">

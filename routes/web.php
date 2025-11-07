@@ -21,6 +21,17 @@ Route::get('/', function () {
 Route::get('/download/apk/{appVersion}', [App\Http\Controllers\AppVersionController::class, 'publicDownload'])
     ->name('apk.download');
 
+// Public Location Logo Route (no authentication required)
+Route::get('/public/storage/location-logos/{filename}', function ($filename) {
+    $path = public_path('storage/location-logos/' . $filename);
+    
+    if (!file_exists($path)) {
+        abort(404);
+    }
+    
+    return response()->file($path);
+})->where('filename', '.*');
+
 // Admin Authentication Routes
 Route::get('/admin/login', [App\Http\Controllers\AdminAuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [App\Http\Controllers\AdminAuthController::class, 'login'])->name('admin.login.submit');
