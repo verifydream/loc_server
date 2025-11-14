@@ -2,36 +2,49 @@
 
 @section('title', 'Add User')
 
+@section('page-icon')
+    <span class="material-symbols-outlined mr-3 text-3xl text-slate-500 dark:text-slate-400">person_add</span>
+@endsection
+
+@section('page-title', 'Add New User')
+
+@section('header-actions')
+    <a class="inline-flex items-center px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors" href="{{ route('admin.users.index') }}">
+        <span class="material-symbols-outlined mr-2 text-lg">arrow_back</span>
+        Back
+    </a>
+@endsection
+
 @section('content')
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Add New User</h2>
-        <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
-            <i class="bi bi-arrow-left"></i> Back to Users
-        </a>
-    </div>
+<div class="max-w-4xl mx-auto">
 
-    <div class="card">
-        <div class="card-body">
-            <form action="{{ route('admin.users.store') }}" method="POST" id="userForm">
-                @csrf
-
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                    <input type="email" 
-                           class="form-control @error('email') is-invalid @enderror" 
+    <div class="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800">
+        <form action="{{ route('admin.users.store') }}" method="POST" id="userForm">
+            @csrf
+            <div class="p-6 md:p-8 space-y-6">
+                <!-- Email -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="email">
+                        Email <span class="text-red-500">*</span>
+                    </label>
+                    <input class="block w-full rounded-md border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 shadow-sm focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary sm:text-sm transition-shadow @error('email') border-red-500 @enderror" 
                            id="email" 
                            name="email" 
+                           type="email" 
                            value="{{ old('email') }}" 
-                           required>
+                           placeholder="user@example.com" 
+                           required/>
                     @error('email')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <div class="mb-3">
-                    <label for="location_id" class="form-label">Location <span class="text-danger">*</span></label>
-                    <select class="form-select @error('location_id') is-invalid @enderror" 
+                <!-- Location -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="location_id">
+                        Location <span class="text-red-500">*</span>
+                    </label>
+                    <select class="block w-full rounded-md border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 shadow-sm focus:border-primary focus:ring-primary dark:focus:border-primary dark:focus:ring-primary sm:text-sm transition-shadow @error('location_id') border-red-500 @enderror" 
                             id="location_id" 
                             name="location_id" 
                             required>
@@ -45,62 +58,70 @@
                         @endforeach
                     </select>
                     @error('location_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <div class="mb-3">
-                    <label for="online_url" class="form-label">Online URL</label>
-                    <input type="text" 
-                           class="form-control" 
+                <!-- Online URL (Read-only) -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="online_url">
+                        Online URL
+                    </label>
+                    <input class="block w-full rounded-md border-slate-300 dark:border-slate-700 bg-slate-200/50 dark:bg-slate-800/50 shadow-sm sm:text-sm text-slate-500 dark:text-slate-400 cursor-not-allowed" 
                            id="online_url" 
+                           type="text" 
                            readonly 
-                           placeholder="Select a location to see URL">
-                    <small class="form-text text-muted">This field is auto-filled based on selected location</small>
+                           placeholder="Select a location to see URL"/>
+                    <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">This field is auto-filled based on selected location.</p>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Status <span class="text-danger">*</span></label>
-                    <div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input @error('status') is-invalid @enderror" 
-                                   type="radio" 
+                <!-- Status -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                        Status <span class="text-red-500">*</span>
+                    </label>
+                    <fieldset class="flex items-center space-x-6">
+                        <div class="flex items-center">
+                            <input class="h-4 w-4 text-primary border-slate-300 dark:border-slate-600 focus:ring-primary dark:bg-slate-800 dark:checked:bg-primary dark:focus:ring-offset-slate-900 @error('status') border-red-500 @enderror" 
+                                   id="status-active" 
                                    name="status" 
-                                   id="status_active" 
+                                   type="radio" 
                                    value="active" 
-                                   {{ old('status', 'active') == 'active' ? 'checked' : '' }}>
-                            <label class="form-check-label" for="status_active">
-                                Active
-                            </label>
+                                   {{ old('status', 'active') == 'active' ? 'checked' : '' }}/>
+                            <label class="ml-2 block text-sm text-slate-800 dark:text-slate-200" for="status-active">Active</label>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input @error('status') is-invalid @enderror" 
-                                   type="radio" 
+                        <div class="flex items-center">
+                            <input class="h-4 w-4 text-primary border-slate-300 dark:border-slate-600 focus:ring-primary dark:bg-slate-800 dark:checked:bg-primary dark:focus:ring-offset-slate-900 @error('status') border-red-500 @enderror" 
+                                   id="status-inactive" 
                                    name="status" 
-                                   id="status_inactive" 
+                                   type="radio" 
                                    value="inactive" 
-                                   {{ old('status') == 'inactive' ? 'checked' : '' }}>
-                            <label class="form-check-label" for="status_inactive">
-                                Inactive
-                            </label>
+                                   {{ old('status') == 'inactive' ? 'checked' : '' }}/>
+                            <label class="ml-2 block text-sm text-slate-800 dark:text-slate-200" for="status-inactive">Inactive</label>
                         </div>
-                        @error('status')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    </fieldset>
+                    @error('status')
+                        <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
                 </div>
+            </div>
 
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-save"></i> Save User
-                    </button>
-                    <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Cancel</a>
-                </div>
-            </form>
-        </div>
+            <!-- Form Actions -->
+            <div class="bg-slate-50 dark:bg-slate-900/50 px-6 py-4 flex justify-end items-center space-x-3 rounded-b-lg border-t border-slate-200 dark:border-slate-800">
+                <a href="{{ route('admin.users.index') }}" class="px-5 py-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-md text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm">
+                    Cancel
+                </a>
+                <button class="inline-flex items-center px-5 py-2.5 bg-primary border border-transparent rounded-md text-sm font-semibold text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-slate-900 transition-colors shadow-sm" type="submit">
+                    <span class="material-symbols-outlined mr-2 text-lg">save</span>
+                    Save User
+                </button>
+            </div>
+        </form>
     </div>
 </div>
+@endsection
 
+@push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const locationSelect = document.getElementById('location_id');
@@ -124,4 +145,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
-@endsection
+@endpush

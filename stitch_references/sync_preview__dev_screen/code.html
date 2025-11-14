@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sync Preview: Dev</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3B82F6", // A modern, friendly blue
+              "background-light": "#F8FAFC", // Light gray for the body background
+              "background-dark": "#0F172A", // Slate-900 for a dark, elegant feel
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.75rem", // 12px
+            },
+          },
+        },
+      };
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-700 dark:text-slate-300 antialiased">
+<div class="flex h-screen">
+<aside class="w-64 flex-shrink-0 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col">
+<div class="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-800">
+<span class="material-symbols-outlined text-primary text-3xl mr-2">dns</span>
+<h1 class="text-xl font-bold text-slate-800 dark:text-white">Location Server</h1>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-2">
+<a class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center px-4 py-2.5 text-sm font-medium bg-primary/10 dark:bg-primary/20 text-primary dark:text-white rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">group</span>
+                    Users
+                </a>
+<a class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3">location_on</span>
+                    Locations
+                </a>
+<a class="flex items-center px-4 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined mr-3">system_update_alt</span>
+                    App Updates
+                </a>
+</nav>
+</aside>
+<div class="flex-1 flex flex-col overflow-hidden">
+<header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-end px-6 flex-shrink-0">
+<div class="flex items-center space-x-4">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-slate-500 mr-2">account_circle</span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Administrator</span>
+</div>
+<button class="flex items-center text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">
+<span class="material-symbols-outlined mr-1 text-lg">logout</span>
+                        Logout
+                    </button>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto p-8">
+<div class="max-w-7xl mx-auto">
+<div class="flex justify-between items-center mb-8">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-3xl text-slate-500 dark:text-slate-400">sync</span>
+<h1 class="text-3xl font-bold text-slate-800 dark:text-white">Sync Preview: Dev</h1>
+</div>
+<button class="inline-flex items-center px-4 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm">
+<span class="material-symbols-outlined mr-2 text-base">arrow_back</span>
+                            Back to Users
+                        </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="bg-green-100 dark:bg-green-900/40 border border-green-200 dark:border-green-800 p-6 rounded-lg shadow-sm">
+<div class="flex items-center text-green-700 dark:text-green-300">
+<span class="material-symbols-outlined mr-3">add_circle</span>
+<h3 class="font-semibold">New Users</h3>
+</div>
+<p class="text-4xl font-bold text-green-800 dark:text-green-200 mt-3">1</p>
+<p class="text-sm text-green-600 dark:text-green-400 mt-1">Will be added</p>
+</div>
+<div class="bg-red-100 dark:bg-red-900/40 border border-red-200 dark:border-red-800 p-6 rounded-lg shadow-sm">
+<div class="flex items-center text-red-700 dark:text-red-300">
+<span class="material-symbols-outlined mr-3">remove_circle</span>
+<h3 class="font-semibold">Deleted Users</h3>
+</div>
+<p class="text-4xl font-bold text-red-800 dark:text-red-200 mt-3">1</p>
+<p class="text-sm text-red-600 dark:text-red-400 mt-1">Will be deactivated</p>
+</div>
+<div class="bg-cyan-100 dark:bg-cyan-900/40 border border-cyan-200 dark:border-cyan-800 p-6 rounded-lg shadow-sm">
+<div class="flex items-center text-cyan-700 dark:text-cyan-300">
+<span class="material-symbols-outlined mr-3">check_circle</span>
+<h3 class="font-semibold">Unchanged</h3>
+</div>
+<p class="text-4xl font-bold text-cyan-800 dark:text-cyan-200 mt-3">38</p>
+<p class="text-sm text-cyan-600 dark:text-cyan-400 mt-1">No changes</p>
+</div>
+<div class="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 rounded-lg shadow-sm">
+<div class="flex items-center text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined mr-3">storage</span>
+<h3 class="font-semibold">Total External</h3>
+</div>
+<p class="text-4xl font-bold text-slate-800 dark:text-slate-200 mt-3">39</p>
+<p class="text-sm text-slate-600 dark:text-slate-400 mt-1">From API</p>
+</div>
+</div>
+<div class="space-y-6">
+<details class="group bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden" open="">
+<summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-green-500">add_circle</span>
+<h4 class="font-semibold text-slate-800 dark:text-white">New Users (1)</h4>
+</div>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="p-6 border-t border-slate-200 dark:border-slate-800">
+<p class="text-sm text-slate-600 dark:text-slate-400 mb-4">These users exist in the external server but not in your database. They will be added as active users.</p>
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-slate-800">
+<tr>
+<th class="px-6 py-3 w-16" scope="col">#</th>
+<th class="px-6 py-3" scope="col">Email</th>
+<th class="px-6 py-3" scope="col">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="bg-white dark:bg-slate-900 border-b dark:border-slate-800">
+<td class="px-6 py-4 font-medium text-slate-600 dark:text-slate-300">1</td>
+<td class="px-6 py-4">test1@dkm</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">Will be added</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</details>
+<details class="group bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden" open="">
+<summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-red-500">remove_circle</span>
+<h4 class="font-semibold text-slate-800 dark:text-white">Deleted Users (1)</h4>
+</div>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="p-6 border-t border-slate-200 dark:border-slate-800">
+<p class="text-sm text-slate-600 dark:text-slate-400 mb-4">These users exist in your database but not in the external server. They will be deactivated (status set to inactive).</p>
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-slate-800">
+<tr>
+<th class="px-6 py-3 w-16" scope="col">#</th>
+<th class="px-6 py-3" scope="col">Email</th>
+<th class="px-6 py-3" scope="col">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="bg-white dark:bg-slate-900 border-b dark:border-slate-800">
+<td class="px-6 py-4 font-medium text-slate-600 dark:text-slate-300">1</td>
+<td class="px-6 py-4">asdas@ashda.com</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">Will be deactivated</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</details>
+<details class="group bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+<summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-cyan-500">check_circle</span>
+<h4 class="font-semibold text-slate-800 dark:text-white">Unchanged Users (38)</h4>
+</div>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="p-6 border-t border-slate-200 dark:border-slate-800">
+<p class="text-sm text-slate-600 dark:text-slate-400 mb-4">These users exist in both systems and will remain unchanged.</p>
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-slate-800">
+<tr>
+<th class="px-6 py-3 w-16" scope="col">#</th>
+<th class="px-6 py-3" scope="col">Email</th>
+<th class="px-6 py-3" scope="col">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="bg-white dark:bg-slate-900 border-b dark:border-slate-800">
+<td class="px-6 py-4 font-medium text-slate-600 dark:text-slate-300">1</td>
+<td class="px-6 py-4">dev_multi@dkm</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-300">No change</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</details>
+</div>
+<div class="flex justify-end items-center mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
+<div class="flex space-x-4">
+<button class="px-5 py-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm">Cancel</button>
+<button class="inline-flex items-center px-5 py-2.5 bg-primary border border-transparent rounded-lg text-sm font-semibold text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/80 dark:focus:ring-offset-background-dark transition-colors shadow-sm">
+<span class="material-symbols-outlined mr-2 text-base">check</span>
+                                Confirm &amp; Execute Sync
+                            </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+
+</body></html>

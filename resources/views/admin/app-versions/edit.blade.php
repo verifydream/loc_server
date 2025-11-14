@@ -1,178 +1,205 @@
 @extends('layouts.admin')
 
-@section('title', 'Edit Versi APK')
+@section('title', 'Edit App Version')
+
+@section('page-icon')
+    <span class="material-symbols-outlined mr-3 text-3xl text-slate-500 dark:text-slate-400">edit</span>
+@endsection
+
+@section('page-title', 'Edit App Version')
 
 @section('content')
-<div class="container-fluid">
-    <!-- Page Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Edit Versi APK</h2>
-        <a href="{{ route('admin.app-versions.index') }}" class="btn btn-secondary">
-            <i class="bi bi-arrow-left"></i> Back
-        </a>
-    </div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Main Form -->
+    <div class="lg:col-span-2">
 
-    <!-- Edit Form -->
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body">
-                    <form action="{{ route('admin.app-versions.update', $appVersion->id) }}" method="POST" enctype="multipart/form-data" id="edit-form">
-                        @csrf
-                        @method('PUT')
+        <div class="bg-white dark:bg-zinc-900 rounded-lg shadow-sm border border-slate-200 dark:border-zinc-800">
+            <form action="{{ route('admin.app-versions.update', $appVersion->id) }}" method="POST" enctype="multipart/form-data" id="edit-form">
+                @csrf
+                @method('PUT')
+                <div class="p-6 md:p-8 space-y-6">
+                    <!-- Version Name -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="version_name">
+                            Version Name <span class="text-red-500">*</span>
+                        </label>
+                        <input class="block w-full rounded-md border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 shadow-sm focus:border-primary focus:ring-primary sm:text-sm @error('version_name') border-red-500 @enderror" 
+                               id="version_name" 
+                               name="version_name" 
+                               type="text" 
+                               value="{{ old('version_name', $appVersion->version_name) }}" 
+                               placeholder="e.g., 1.0.0" 
+                               required/>
+                        @error('version_name')
+                            <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                        @else
+                            <p class="mt-1.5 text-xs text-slate-500 dark:text-slate-400">Format: Major.Minor.Patch (e.g., 1.0.0)</p>
+                        @enderror
+                    </div>
 
-                        <!-- Version Name -->
-                        <div class="mb-3">
-                            <label for="version_name" class="form-label">Version Name <span class="text-danger">*</span></label>
-                            <input type="text" 
-                                   class="form-control @error('version_name') is-invalid @enderror" 
-                                   id="version_name" 
-                                   name="version_name" 
-                                   value="{{ old('version_name', $appVersion->version_name) }}" 
-                                   placeholder="e.g., 1.0.0" 
-                                   required>
-                            @error('version_name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                            <small class="form-text text-muted">Format: Major.Minor.Patch (e.g., 1.0.0)</small>
-                        </div>
+                    <!-- Version Code -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="version_code">
+                            Version Code <span class="text-red-500">*</span>
+                        </label>
+                        <input class="block w-full rounded-md border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 shadow-sm focus:border-primary focus:ring-primary sm:text-sm @error('version_code') border-red-500 @enderror" 
+                               id="version_code" 
+                               name="version_code" 
+                               type="number" 
+                               value="{{ old('version_code', $appVersion->version_code) }}" 
+                               placeholder="e.g., 1" 
+                               required/>
+                        @error('version_code')
+                            <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                        @else
+                            <p class="mt-1.5 text-xs text-slate-500 dark:text-slate-400">Integer value that increases with each version</p>
+                        @enderror
+                    </div>
 
-                        <!-- Version Code -->
-                        <div class="mb-3">
-                            <label for="version_code" class="form-label">Version Code <span class="text-danger">*</span></label>
-                            <input type="number" 
-                                   class="form-control @error('version_code') is-invalid @enderror" 
-                                   id="version_code" 
-                                   name="version_code" 
-                                   value="{{ old('version_code', $appVersion->version_code) }}" 
-                                   placeholder="e.g., 1" 
-                                   required>
-                            @error('version_code')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                            <small class="form-text text-muted">Integer value that increases with each version</small>
-                        </div>
+                    <!-- Release Notes -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="release_notes">
+                            Release Notes
+                        </label>
+                        <textarea class="block w-full rounded-md border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 shadow-sm focus:border-primary focus:ring-primary sm:text-sm @error('release_notes') border-red-500 @enderror" 
+                                  id="release_notes" 
+                                  name="release_notes" 
+                                  rows="6"
+                                  placeholder="What's new in this version?">{{ old('release_notes', $appVersion->release_notes) }}</textarea>
+                        @error('release_notes')
+                            <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-                        <!-- Release Notes -->
-                        <div class="mb-3">
-                            <label for="release_notes" class="form-label">Release Notes</label>
-                            <textarea class="form-control @error('release_notes') is-invalid @enderror" 
-                                      id="release_notes" 
-                                      name="release_notes" 
-                                      rows="6" 
-                                      placeholder="What's new in this version?">{{ old('release_notes', $appVersion->release_notes) }}</textarea>
-                            @error('release_notes')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- APK File -->
-                        <div class="mb-3">
-                            <label for="apk_file" class="form-label">APK File (Optional)</label>
-                            <input type="file" 
-                                   class="form-control @error('apk_file') is-invalid @enderror" 
-                                   id="apk_file" 
-                                   name="apk_file" 
-                                   accept=".apk">
-                            @error('apk_file')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                            <small class="form-text text-muted">
+                    <!-- APK File -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="apk_file">
+                            APK File (Optional)
+                        </label>
+                        <input class="block w-full text-sm text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-blue-600 cursor-pointer border border-slate-300 dark:border-slate-700 rounded-md bg-slate-50 dark:bg-slate-800 @error('apk_file') border-red-500 @enderror" 
+                               id="apk_file" 
+                               name="apk_file" 
+                               type="file" 
+                               accept=".apk"/>
+                        @error('apk_file')
+                            <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                        @else
+                            <p class="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
                                 Leave empty to keep current file. Current file: 
                                 @if(Storage::exists($appVersion->file_path))
                                     {{ number_format(Storage::size($appVersion->file_path) / 1024 / 1024, 2) }} MB
                                 @else
-                                    <span class="text-danger">Not found</span>
+                                    <span class="text-red-500">Not found</span>
                                 @endif
-                            </small>
-                            
-                            <!-- File Info Display -->
-                            <div id="file-info" class="mt-2 d-none">
-                                <small class="text-muted">
-                                    <i class="bi bi-file-earmark-zip"></i> 
-                                    <span id="file-name"></span> 
-                                    (<span id="file-size"></span>)
-                                </small>
+                            </p>
+                        @enderror
+                        
+                        <!-- File Info Display -->
+                        <div id="file-info" class="hidden mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                            <div class="flex items-center text-sm text-blue-800 dark:text-blue-200">
+                                <span class="material-symbols-outlined mr-2">description</span>
+                                <span id="file-name" class="font-medium"></span>
+                                <span class="mx-2">•</span>
+                                <span id="file-size"></span>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Upload Progress Bar -->
-                        <div id="upload-progress-container" class="mb-3 d-none">
-                            <div class="card border-primary">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="fw-bold">Uploading...</span>
-                                        <span id="progress-percentage" class="badge bg-primary">0%</span>
-                                    </div>
-                                    <div class="progress" style="height: 25px;">
-                                        <div id="progress-bar" 
-                                             class="progress-bar progress-bar-striped progress-bar-animated" 
-                                             role="progressbar" 
-                                             style="width: 0%"
-                                             aria-valuenow="0" 
-                                             aria-valuemin="0" 
-                                             aria-valuemax="100">
-                                            <span id="progress-text">0%</span>
-                                        </div>
-                                    </div>
-                                    <div class="mt-2">
-                                        <small class="text-muted">
-                                            <span id="upload-speed">0 KB/s</span> • 
-                                            <span id="upload-eta">Calculating...</span>
-                                        </small>
-                                    </div>
+                    <!-- Upload Progress -->
+                    <div id="upload-progress-container" class="hidden">
+                        <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-semibold text-blue-800 dark:text-blue-200">Uploading...</span>
+                                <span id="progress-percentage" class="text-sm font-bold text-blue-800 dark:text-blue-200">0%</span>
+                            </div>
+                            <div class="w-full bg-blue-200 dark:bg-blue-900 rounded-full h-6 overflow-hidden">
+                                <div id="progress-bar" class="h-full bg-gradient-to-r from-blue-500 to-blue-600 transition-all duration-300 flex items-center justify-center text-xs font-semibold text-white" style="width: 0%">
+                                    <span id="progress-text">0%</span>
                                 </div>
                             </div>
+                            <div class="mt-2 flex justify-between text-xs text-blue-700 dark:text-blue-300">
+                                <span id="upload-speed">0 KB/s</span>
+                                <span id="upload-eta">Calculating...</span>
+                            </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Submit Buttons -->
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary" id="update-btn">
-                                <i class="bi bi-save"></i> Update Version
-                            </button>
-                            <a href="{{ route('admin.app-versions.show', $appVersion->id) }}" class="btn btn-secondary" id="cancel-btn">
-                                Cancel
-                            </a>
-                        </div>
-                    </form>
+                <!-- Form Actions -->
+                <div class="bg-slate-50 dark:bg-slate-900/50 px-6 py-4 flex justify-end items-center space-x-3 rounded-b-lg border-t border-slate-200 dark:border-slate-800">
+                    <a href="{{ route('admin.app-versions.show', $appVersion->id) }}" id="cancel-btn" class="px-5 py-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-md text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm">
+                        Cancel
+                    </a>
+                    <button id="update-btn" class="inline-flex items-center px-5 py-2.5 bg-primary border border-transparent rounded-md text-sm font-semibold text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors shadow-sm" type="submit">
+                        <span class="material-symbols-outlined mr-2 text-lg">save</span>
+                        Update Version
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="space-y-6">
+        <div class="bg-white dark:bg-zinc-900 rounded-lg shadow-sm border border-slate-200 dark:border-zinc-800">
+            <div class="p-6 border-b border-slate-200 dark:border-zinc-800">
+                <h3 class="text-lg font-semibold text-slate-800 dark:text-white flex items-center">
+                    <span class="material-symbols-outlined mr-2 text-slate-500">info</span>
+                    Current Version Info
+                </h3>
+            </div>
+            <div class="p-6 space-y-3 text-sm">
+                <div>
+                    <span class="text-slate-600 dark:text-slate-400">Version:</span>
+                    <span class="ml-2 font-semibold text-slate-800 dark:text-slate-200">{{ $appVersion->version_name }}</span>
+                </div>
+                <div>
+                    <span class="text-slate-600 dark:text-slate-400">Code:</span>
+                    <span class="ml-2 font-semibold text-slate-800 dark:text-slate-200">{{ $appVersion->version_code }}</span>
+                </div>
+                <div>
+                    <span class="text-slate-600 dark:text-slate-400">Uploaded:</span>
+                    <span class="ml-2 font-semibold text-slate-800 dark:text-slate-200">{{ $appVersion->created_at->format('d M Y, H:i') }}</span>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0">Current Version Info</h5>
-                </div>
-                <div class="card-body">
-                    <p><strong>Version:</strong> {{ $appVersion->version_name }}</p>
-                    <p><strong>Code:</strong> {{ $appVersion->version_code }}</p>
-                    <p><strong>Uploaded:</strong> {{ $appVersion->created_at->format('d M Y, H:i') }}</p>
-                </div>
+        <div class="bg-white dark:bg-zinc-900 rounded-lg shadow-sm border border-slate-200 dark:border-zinc-800">
+            <div class="p-6 border-b border-slate-200 dark:border-zinc-800">
+                <h3 class="text-lg font-semibold text-slate-800 dark:text-white flex items-center">
+                    <span class="material-symbols-outlined mr-2 text-slate-500">lightbulb</span>
+                    Tips
+                </h3>
             </div>
-
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h5 class="mb-0">Tips</h5>
-                </div>
-                <div class="card-body">
-                    <ul class="small mb-0">
-                        <li>Version code must be unique and higher than previous versions</li>
-                        <li>Maximum file size: 150 MB</li>
-                        <li>Only .apk files are accepted</li>
-                        <li>Leave APK file empty to keep the current file</li>
-                    </ul>
-                </div>
+            <div class="p-6">
+                <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-2">
+                    <li class="flex items-start">
+                        <span class="material-symbols-outlined mr-2 text-primary text-base">check_circle</span>
+                        <span>Version code must be unique and higher than previous versions</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="material-symbols-outlined mr-2 text-primary text-base">check_circle</span>
+                        <span>Maximum file size: 150 MB</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="material-symbols-outlined mr-2 text-primary text-base">check_circle</span>
+                        <span>Only .apk files are accepted</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="material-symbols-outlined mr-2 text-primary text-base">check_circle</span>
+                        <span>Leave APK file empty to keep the current file</span>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 </div>
+@endsection
 
+@push('scripts')
 <script>
 (function() {
     'use strict';
-    
-    console.log('[INLINE-EDIT] Upload progress script loaded');
     
     const form = document.getElementById('edit-form');
     const fileInput = document.getElementById('apk_file');
@@ -188,39 +215,27 @@
     const fileName = document.getElementById('file-name');
     const fileSize = document.getElementById('file-size');
 
-    console.log('[INLINE-EDIT] Elements found:', {
-        form: !!form,
-        fileInput: !!fileInput,
-        updateBtn: !!updateBtn,
-        progressContainer: !!progressContainer
-    });
-
     let startTime;
     let hasNewFile = false;
 
     // Show file info when file is selected
     fileInput.addEventListener('change', function(e) {
-        console.log('[INLINE-EDIT] File selected:', this.files.length);
         if (this.files.length > 0) {
             const file = this.files[0];
-            console.log('[INLINE-EDIT] File info:', file.name, file.size);
             fileName.textContent = file.name;
             fileSize.textContent = formatFileSize(file.size);
-            fileInfo.classList.remove('d-none');
+            fileInfo.classList.remove('hidden');
             hasNewFile = true;
         } else {
-            fileInfo.classList.add('d-none');
+            fileInfo.classList.add('hidden');
             hasNewFile = false;
         }
     });
 
     // Handle form submission with progress tracking
     form.addEventListener('submit', function(e) {
-        console.log('[INLINE-EDIT] Form submitted, hasNewFile:', hasNewFile);
-        
         // If no new file, submit normally
         if (!hasNewFile) {
-            console.log('[INLINE-EDIT] No new file, submitting normally');
             return true;
         }
 
@@ -228,12 +243,10 @@
 
         // Validate form
         if (!form.checkValidity()) {
-            console.log('[INLINE-EDIT] Form validation failed');
             form.classList.add('was-validated');
             return;
         }
 
-        console.log('[INLINE-EDIT] Starting upload...');
         const formData = new FormData(form);
         const xhr = new XMLHttpRequest();
 
@@ -241,9 +254,10 @@
         startTime = Date.now();
 
         // Show progress bar and disable buttons
-        progressContainer.classList.remove('d-none');
+        progressContainer.classList.remove('hidden');
         updateBtn.disabled = true;
-        cancelBtn.classList.add('disabled');
+        updateBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        cancelBtn.classList.add('opacity-50', 'pointer-events-none');
         fileInput.disabled = true;
 
         // Track upload progress
@@ -253,7 +267,6 @@
                 
                 // Update progress bar
                 progressBar.style.width = percentComplete + '%';
-                progressBar.setAttribute('aria-valuenow', percentComplete);
                 progressText.textContent = percentComplete + '%';
                 progressPercentage.textContent = percentComplete + '%';
 
@@ -268,26 +281,22 @@
                 uploadEta.textContent = 'ETA: ' + formatTime(eta);
 
                 // Change color based on progress
-                if (percentComplete < 50) {
-                    progressBar.classList.remove('bg-warning', 'bg-success');
-                    progressBar.classList.add('bg-primary');
-                } else if (percentComplete < 90) {
-                    progressBar.classList.remove('bg-primary', 'bg-success');
-                    progressBar.classList.add('bg-warning');
-                } else {
-                    progressBar.classList.remove('bg-primary', 'bg-warning');
-                    progressBar.classList.add('bg-success');
+                if (percentComplete >= 90) {
+                    progressBar.classList.remove('from-blue-500', 'to-blue-600', 'from-yellow-500', 'to-yellow-600');
+                    progressBar.classList.add('from-green-500', 'to-green-600');
+                } else if (percentComplete >= 50) {
+                    progressBar.classList.remove('from-blue-500', 'to-blue-600', 'from-green-500', 'to-green-600');
+                    progressBar.classList.add('from-yellow-500', 'to-yellow-600');
                 }
             }
         });
 
         // Handle successful upload
         xhr.addEventListener('load', function() {
-            console.log('[INLINE-EDIT] Upload complete, status:', xhr.status);
             if (xhr.status === 200 || xhr.status === 302) {
-                progressBar.classList.remove('progress-bar-animated');
-                progressBar.classList.add('bg-success');
-                progressText.textContent = 'Upload Complete!';
+                progressBar.classList.remove('from-blue-500', 'to-blue-600', 'from-yellow-500', 'to-yellow-600');
+                progressBar.classList.add('from-green-500', 'to-green-600');
+                progressText.textContent = 'Complete!';
                 uploadSpeed.textContent = 'Completed';
                 uploadEta.textContent = 'Done!';
 
@@ -302,13 +311,11 @@
 
         // Handle upload error
         xhr.addEventListener('error', function() {
-            console.error('[INLINE-EDIT] Upload error');
             handleUploadError('Network error occurred. Please check your connection.');
         });
 
         // Handle upload abort
         xhr.addEventListener('abort', function() {
-            console.log('[INLINE-EDIT] Upload aborted');
             handleUploadError('Upload cancelled.');
         });
 
@@ -319,23 +326,24 @@
     });
 
     function handleUploadError(message) {
-        progressBar.classList.remove('progress-bar-animated', 'bg-primary', 'bg-warning');
-        progressBar.classList.add('bg-danger');
+        progressBar.classList.remove('from-blue-500', 'to-blue-600', 'from-yellow-500', 'to-yellow-600', 'from-green-500', 'to-green-600');
+        progressBar.classList.add('from-red-500', 'to-red-600');
         progressText.textContent = 'Failed!';
         uploadSpeed.textContent = message;
         uploadEta.textContent = '';
         
         // Re-enable buttons
         updateBtn.disabled = false;
-        cancelBtn.classList.remove('disabled');
+        updateBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        cancelBtn.classList.remove('opacity-50', 'pointer-events-none');
         fileInput.disabled = false;
 
         // Hide progress after delay
         setTimeout(function() {
-            progressContainer.classList.add('d-none');
+            progressContainer.classList.add('hidden');
             progressBar.style.width = '0%';
-            progressBar.classList.remove('bg-danger');
-            progressBar.classList.add('bg-primary', 'progress-bar-animated');
+            progressBar.classList.remove('from-red-500', 'to-red-600');
+            progressBar.classList.add('from-blue-500', 'to-blue-600');
         }, 3000);
     }
 
@@ -363,4 +371,4 @@
     }
 })();
 </script>
-@endsection
+@endpush

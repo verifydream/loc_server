@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Management - Location Server</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#3b82f6", // blue-500
+            "background-light": "#f8fafc", // slate-50
+            "background-dark": "#1e293b", // slate-800
+          },
+          fontFamily: {
+            display: ["Inter", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "0.5rem", // 8px
+          },
+        },
+      },
+    };
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 20
+    }
+  </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-700 dark:text-slate-300">
+<div class="flex h-screen">
+<aside class="w-64 flex-shrink-0 bg-white dark:bg-slate-900 flex flex-col border-r border-slate-200 dark:border-slate-700">
+<div class="h-16 flex items-center justify-center px-4 border-b border-slate-200 dark:border-slate-700">
+<h1 class="text-xl font-bold text-slate-800 dark:text-white">Location Server</h1>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-2">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-600 dark:text-slate-400 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+          Dashboard
+        </a>
+<a class="flex items-center gap-3 px-4 py-2 text-white bg-primary rounded-md" href="#">
+<span class="material-symbols-outlined">group</span>
+          Users
+        </a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-600 dark:text-slate-400 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">location_on</span>
+          Locations
+        </a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-600 dark:text-slate-400 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">system_update_alt</span>
+          App Updates
+        </a>
+</nav>
+</aside>
+<div class="flex-1 flex flex-col overflow-hidden">
+<header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 flex items-center justify-end px-6 flex-shrink-0">
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+            Administrator
+          </button>
+<button class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">logout</span>
+            Logout
+          </button>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto p-6 lg:p-8">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+<h1 class="text-3xl font-bold text-slate-800 dark:text-white">User Management</h1>
+<div class="flex items-center space-x-2 mt-4 md:mt-0">
+<button class="flex items-center justify-center gap-2 px-4 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 rounded-md shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-base">sync</span>
+                Sync from Server
+              </button>
+<button class="flex items-center justify-center gap-2 px-4 py-2 bg-primary text-white rounded-md shadow-sm hover:bg-blue-600 transition-colors">
+<span class="material-symbols-outlined text-base">add</span>
+                Add User
+              </button>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900/70 p-6 rounded-lg shadow-sm mb-8 border border-slate-200 dark:border-slate-700">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div>
+<label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1" for="search_email">Search by Email</label>
+<input class="w-full rounded-md border-slate-300 dark:border-slate-600 bg-background-light dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:ring-primary focus:border-primary" id="search_email" placeholder="Enter email..." type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1" for="filter_location">Filter by Location</label>
+<select class="w-full rounded-md border-slate-300 dark:border-slate-600 bg-background-light dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:ring-primary focus:border-primary" id="filter_location">
+<option>All Locations</option>
+<option>Dev</option>
+<option>BNS</option>
+<option>Test</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1" for="filter_status">Filter by Status</label>
+<select class="w-full rounded-md border-slate-300 dark:border-slate-600 bg-background-light dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:ring-primary focus:border-primary" id="filter_status">
+<option>All Status</option>
+<option>Active</option>
+<option>Inactive</option>
+</select>
+</div>
+<div class="flex items-end">
+<button class="w-full px-4 py-2 bg-primary text-white rounded-md shadow-sm hover:bg-blue-600 transition-colors h-10">Apply Filters</button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900/70 rounded-lg shadow-sm overflow-hidden border border-slate-200 dark:border-slate-700">
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="bg-slate-50 dark:bg-slate-800 text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+<tr>
+<th class="px-6 py-3 font-medium" scope="col">Email</th>
+<th class="px-6 py-3 font-medium" scope="col">Location Name</th>
+<th class="px-6 py-3 font-medium" scope="col">Online URL</th>
+<th class="px-6 py-3 font-medium" scope="col">Status</th>
+<th class="px-6 py-3 font-medium text-right" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+<td class="px-6 py-4 whitespace-nowrap font-medium text-slate-800 dark:text-slate-200">testajah@gmail.com</td>
+<td class="px-6 py-4 whitespace-nowrap">Test</td>
+<td class="px-6 py-4 whitespace-nowrap">https://apidepostest.dwipakharismamitra.com</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300">Inactive</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right space-x-2">
+<button class="p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"><span class="material-symbols-outlined text-base align-middle text-amber-500">edit</span></button>
+<button class="p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"><span class="material-symbols-outlined text-base align-middle text-red-500">delete</span></button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+<td class="px-6 py-4 whitespace-nowrap font-medium text-slate-800 dark:text-slate-200">user1@dkm</td>
+<td class="px-6 py-4 whitespace-nowrap">BNS</td>
+<td class="px-6 py-4 whitespace-nowrap">bns.web.com</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300">Inactive</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right space-x-2">
+<button class="p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"><span class="material-symbols-outlined text-base align-middle text-amber-500">edit</span></button>
+<button class="p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"><span class="material-symbols-outlined text-base align-middle text-red-500">delete</span></button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+<td class="px-6 py-4 whitespace-nowrap font-medium text-slate-800 dark:text-slate-200">dev_vendor1@dkm</td>
+<td class="px-6 py-4 whitespace-nowrap">Dev</td>
+<td class="px-6 py-4 whitespace-nowrap">https://dev.mydeposys.com</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">Active</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right space-x-2">
+<button class="p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"><span class="material-symbols-outlined text-base align-middle text-amber-500">edit</span></button>
+<button class="p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"><span class="material-symbols-outlined text-base align-middle text-red-500">delete</span></button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+<td class="px-6 py-4 whitespace-nowrap font-medium text-slate-800 dark:text-slate-200">dev_mnr@dkm</td>
+<td class="px-6 py-4 whitespace-nowrap">Dev</td>
+<td class="px-6 py-4 whitespace-nowrap">https://dev.mydeposys.com</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">Active</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right space-x-2">
+<button class="p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"><span class="material-symbols-outlined text-base align-middle text-amber-500">edit</span></button>
+<button class="p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"><span class="material-symbols-outlined text-base align-middle text-red-500">delete</span></button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+<td class="px-6 py-4 whitespace-nowrap font-medium text-slate-800 dark:text-slate-200">multi@dkm</td>
+<td class="px-6 py-4 whitespace-nowrap">Dev</td>
+<td class="px-6 py-4 whitespace-nowrap">https://dev.mydeposys.com</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">Active</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right space-x-2">
+<button class="p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"><span class="material-symbols-outlined text-base align-middle text-amber-500">edit</span></button>
+<button class="p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"><span class="material-symbols-outlined text-base align-middle text-red-500">delete</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="flex items-center justify-between px-6 py-4 border-t border-slate-200 dark:border-slate-700">
+<p class="text-sm text-slate-500 dark:text-slate-400">
+                    Showing <span class="font-semibold text-slate-700 dark:text-slate-200">1</span> to <span class="font-semibold text-slate-700 dark:text-slate-200">5</span> of <span class="font-semibold text-slate-700 dark:text-slate-200">90</span> entries
+                </p>
+<nav class="flex items-center space-x-1">
+<a class="inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</a>
+<a class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-primary text-white font-medium" href="#">1</a>
+<a class="inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">2</a>
+<a class="inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">3</a>
+<span class="text-slate-500 dark:text-slate-400">...</span>
+<a class="inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">6</a>
+<a class="inline-flex items-center justify-center w-8 h-8 rounded-md text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</a>
+</nav>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+
+</body></html>
