@@ -1,0 +1,343 @@
+{
+	"info": {
+		"_postman_id": "f37c9231-8eb1-4f21-8632-573fb6b8396a",
+		"name": "Location Server API",
+		"description": "API Collection untuk Location Server dan App Version Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Check Location",
+			"item": [
+				{
+					"name": "POST - Valid Email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Api-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user1@dkm\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/check-location",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"check-location"
+							]
+						},
+						"description": "Check user location dengan email yang valid"
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Invalid Email Format",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Api-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"invalid-email\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/check-location",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"check-location"
+							]
+						},
+						"description": "Test validation error dengan format email yang salah"
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Missing Email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Api-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/check-location",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"check-location"
+							]
+						},
+						"description": "Test validation error tanpa email"
+					},
+					"response": []
+				},
+				{
+					"name": "GET - With Query Parameter",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Api-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/check-location?email=user@example.com",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"check-location"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "user@example.com"
+								}
+							]
+						},
+						"description": "Check location menggunakan GET method dengan query parameter"
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Wrong API Key",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Api-Key",
+								"value": "wrong-api-key",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"test_survey@dkm\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/check-location",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"check-location"
+							]
+						},
+						"description": "Test unauthorized dengan API key yang salah"
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Missing API Key",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/check-location",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"check-location"
+							]
+						},
+						"description": "Test unauthorized tanpa API key"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Latest Version",
+			"item": [
+				{
+					"name": "GET - Success",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Api-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/latest-version",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"latest-version"
+							]
+						},
+						"description": "Get latest APK version information"
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Wrong API Key",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Api-Key",
+								"value": "wrong-api-key",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/latest-version",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"latest-version"
+							]
+						},
+						"description": "Test unauthorized dengan API key yang salah"
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Missing API Key",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/latest-version",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"latest-version"
+							]
+						},
+						"description": "Test unauthorized tanpa API key"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "api_key",
+			"value": "your-secret-api-key-123",
+			"type": "string"
+		}
+	]
+}
