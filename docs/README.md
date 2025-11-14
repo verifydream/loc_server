@@ -1,216 +1,213 @@
-# 📚 Documentation Index
+# Documentation Index
 
-Dokumentasi lengkap untuk Location Server Project.
+Selamat datang di dokumentasi Location Server! Dokumentasi ini telah diorganisir berdasarkan kategori untuk memudahkan navigasi.
+
+## 📁 Struktur Dokumentasi
+
+```
+docs/
+├── api/                      # API Documentation
+├── features/                 # Feature Documentation
+│   ├── user-sync/           # User Sync Multi-Server
+│   ├── upload-progress/     # Upload Progress Feature
+│   ├── location-logo/       # Location Logo Feature
+│   └── apk-download/        # APK Download Feature
+├── deployment/              # Deployment Guides
+├── testing/                 # Testing Guides
+├── guides/                  # General Guides & Tutorials
+└── README.md               # This file
+```
 
 ---
 
 ## 🚀 Quick Start
 
-### Untuk Testing API
-👉 **[PANDUAN_CEPAT_API.md](PANDUAN_CEPAT_API.md)** - Panduan cepat Bahasa Indonesia (5 menit)
+### Untuk Developer Baru
+1. [Setup Guide](deployment/SETUP.md) - Setup environment
+2. [Deployment Guide](deployment/DEPLOYMENT.md) - Deploy aplikasi
+3. [API Documentation](api/README_API.md) - API reference
 
-### Untuk Flutter Developer
-👉 **[FLUTTER_API_GUIDE2.md](FLUTTER_API_GUIDE2.md)** - API Guide dengan Authentication (Recommended)  
-👉 **[FLUTTER_API_GUIDE1.md](FLUTTER_API_GUIDE1.md)** - API Guide tanpa Authentication (Legacy)
-
-### Untuk Setup & Deployment
-👉 **[SETUP.md](SETUP.md)** - Setup project dari awal  
-👉 **[DEPLOYMENT.md](DEPLOYMENT.md)** - Deploy ke production
-
----
-
-## 📖 API Documentation
-
-### Complete Documentation
-| File | Deskripsi | Bahasa |
-|------|-----------|--------|
-| [API_DOCUMENTATION.md](API_DOCUMENTATION.md) | Dokumentasi lengkap semua endpoint | English |
-| [API_TESTING_GUIDE.md](API_TESTING_GUIDE.md) | Quick start testing (5 menit) | English |
-| [API_RESPONSE_EXAMPLES.md](API_RESPONSE_EXAMPLES.md) | Contoh response & code | English |
-| [PANDUAN_CEPAT_API.md](PANDUAN_CEPAT_API.md) | Panduan cepat testing | Indonesia |
-
-### Quick Reference
-| File | Deskripsi |
-|------|-----------|
-| [API_QUICK_REFERENCE.md](API_QUICK_REFERENCE.md) | Quick reference card |
-| [API_DOCS_INDEX.md](API_DOCS_INDEX.md) | Navigation guide |
-| [README_API.md](README_API.md) | Overview & troubleshooting |
-
-### Summary & Changelog
-| File | Deskripsi |
-|------|-----------|
-| [DOKUMENTASI_API_SUMMARY.md](DOKUMENTASI_API_SUMMARY.md) | Summary semua dokumentasi |
-| [CHANGELOG_TODAY.md](CHANGELOG_TODAY.md) | Changelog November 4, 2025 |
+### Untuk Feature Development
+1. [User Sync Feature](features/user-sync/README_SYNC_FEATURE.md) - Sync users dari server eksternal
+2. [Upload Progress](features/upload-progress/UPLOAD_PROGRESS_FEATURE.md) - Upload dengan progress bar
+3. [Location Logo](features/location-logo/LOCATION_LOGO_FEATURE.md) - Manage location logos
 
 ---
 
-## 📱 Flutter Integration
+## 📚 Documentation by Category
 
-### API Guides
-| File | Authentication | Endpoints | Use Case |
-|------|---------------|-----------|----------|
-| [FLUTTER_API_GUIDE2.md](FLUTTER_API_GUIDE2.md) | ✅ Required | 3 endpoints | Location check + Auto update |
-| [FLUTTER_API_GUIDE1.md](FLUTTER_API_GUIDE1.md) | ❌ No auth | 1 endpoint | Pre-login location check |
+### 🔌 API Documentation
+**Location**: `docs/api/`
 
-### Comparison
-👉 **[FLUTTER_API_COMPARISON.md](FLUTTER_API_COMPARISON.md)** - Perbandingan Guide 1 vs Guide 2
+- [API Documentation](api/API_DOCUMENTATION.md) - Complete API reference
+- [API Quick Reference](api/API_QUICK_REFERENCE.md) - Quick lookup
+- [API Testing Guide](api/API_TESTING_GUIDE.md) - How to test APIs
+- [API Changelog](api/API_CHANGELOG.md) - API changes history
+- [Postman Test Guide](api/POSTMAN_TEST_GUIDE.md) - Postman collection
 
-**Recommendation:** Gunakan **FLUTTER_API_GUIDE2.md** untuk project baru (dengan authentication)
-
----
-
-## 🔧 Technical Documentation
-
-### Setup & Configuration
-| File | Deskripsi |
-|------|-----------|
-| [SETUP.md](SETUP.md) | Setup project dari awal |
-| [DEPLOYMENT.md](DEPLOYMENT.md) | Deploy ke production |
-| [NGROK_SETUP_GUIDE.md](NGROK_SETUP_GUIDE.md) | Setup ngrok untuk testing |
-
-### Technical Details
-| File | Deskripsi |
-|------|-----------|
-| [PENJELASAN_FILE_STORAGE.md](PENJELASAN_FILE_STORAGE.md) | Penjelasan file storage APK |
-| [API-Documentation-Rules-Auth.md](API-Documentation-Rules-Auth.md) | Rules & authentication |
+**Key APIs**:
+- `/api/check-location` - Check user location
+- `/api/latest-version` - Get latest app version
+- `/api/auth/login` - Authentication
 
 ---
 
-## 🎯 Documentation by Role
+### ⚙️ Features Documentation
+**Location**: `docs/features/`
 
-### 👨‍💻 Backend Developer
-1. [SETUP.md](SETUP.md) - Setup project
-2. [API_DOCUMENTATION.md](API_DOCUMENTATION.md) - API specs
-3. [DEPLOYMENT.md](DEPLOYMENT.md) - Deploy guide
-4. [PENJELASAN_FILE_STORAGE.md](PENJELASAN_FILE_STORAGE.md) - File storage
+#### User Sync Multi-Server
+**Location**: `docs/features/user-sync/`
 
-### 📱 Flutter Developer
-1. [FLUTTER_API_GUIDE2.md](FLUTTER_API_GUIDE2.md) - API integration
-2. [FLUTTER_API_COMPARISON.md](FLUTTER_API_COMPARISON.md) - Guide comparison
-3. [API_RESPONSE_EXAMPLES.md](API_RESPONSE_EXAMPLES.md) - Response examples
+- [README](features/user-sync/README_SYNC_FEATURE.md) - Overview
+- [Full Documentation](features/user-sync/USER_SYNC_FEATURE.md) - Complete guide
+- [Usage Examples](features/user-sync/USAGE_EXAMPLES.md) - Real-world scenarios
+- [Testing Guide](features/user-sync/TESTING_GUIDE.md) - Test cases
+- [Implementation Summary](features/user-sync/IMPLEMENTATION_SUMMARY.md) - What was built
+- [Bug Fix Summary](features/user-sync/BUGFIX_SUMMARY.md) - Bugs fixed
 
-### 🧪 QA / Tester
-1. [PANDUAN_CEPAT_API.md](PANDUAN_CEPAT_API.md) - Quick start
-2. [API_TESTING_GUIDE.md](API_TESTING_GUIDE.md) - Testing guide
-3. [API_QUICK_REFERENCE.md](API_QUICK_REFERENCE.md) - Quick reference
-
-### 👔 Project Manager
-1. [DOKUMENTASI_API_SUMMARY.md](DOKUMENTASI_API_SUMMARY.md) - Summary
-2. [CHANGELOG_TODAY.md](CHANGELOG_TODAY.md) - Recent changes
-3. [README_API.md](README_API.md) - Overview
+**What it does**: Sync user accounts from external servers (dev, test, prod) with preview and confirmation.
 
 ---
 
-## 📊 Documentation Statistics
+#### Upload Progress
+**Location**: `docs/features/upload-progress/`
 
-**Total Files:** 17 files  
-**Total Size:** ~105 KB  
-**Languages:** English & Indonesia  
-**Last Updated:** November 4, 2025
+- [Upload Progress Feature](features/upload-progress/UPLOAD_PROGRESS_FEATURE.md) - Main documentation
+- [Quick Start](features/upload-progress/QUICK_START_UPLOAD_PROGRESS.md) - Get started quickly
+- [Testing Guide](features/upload-progress/TESTING_GUIDE_UPLOAD_PROGRESS.md) - How to test
+- [Changelog](features/upload-progress/CHANGELOG_UPLOAD_PROGRESS.md) - Changes history
 
-### By Category:
-- **API Documentation:** 7 files
-- **Flutter Guides:** 3 files
-- **Setup & Deployment:** 3 files
-- **Technical Details:** 2 files
-- **Summary & Index:** 2 files
+**What it does**: Real-time upload progress for APK files.
 
 ---
 
-## 🔍 Find What You Need
+#### Location Logo
+**Location**: `docs/features/location-logo/`
 
-### Saya mau...
+- [Location Logo Feature](features/location-logo/LOCATION_LOGO_FEATURE.md) - Documentation
 
-#### ...Test API di Postman
-👉 [PANDUAN_CEPAT_API.md](PANDUAN_CEPAT_API.md) (Indonesia)  
-👉 [API_TESTING_GUIDE.md](API_TESTING_GUIDE.md) (English)
-
-#### ...Integrate API di Flutter
-👉 [FLUTTER_API_GUIDE2.md](FLUTTER_API_GUIDE2.md) (With Auth - Recommended)  
-👉 [FLUTTER_API_GUIDE1.md](FLUTTER_API_GUIDE1.md) (No Auth - Legacy)
-
-#### ...Setup Project dari Awal
-👉 [SETUP.md](SETUP.md)
-
-#### ...Deploy ke Production
-👉 [DEPLOYMENT.md](DEPLOYMENT.md)
-
-#### ...Lihat Contoh Response
-👉 [API_RESPONSE_EXAMPLES.md](API_RESPONSE_EXAMPLES.md)
-
-#### ...Troubleshoot Error
-👉 [README_API.md](README_API.md) - Section Common Issues
-
-#### ...Understand File Storage
-👉 [PENJELASAN_FILE_STORAGE.md](PENJELASAN_FILE_STORAGE.md)
+**What it does**: Upload and manage logos for each location.
 
 ---
 
-## 📝 Notes
+#### APK Download
+**Location**: `docs/features/apk-download/`
 
-### API Versions
-- **v1:** No authentication (FLUTTER_API_GUIDE1.md)
-- **v2:** With authentication (FLUTTER_API_GUIDE2.md) ⭐ Recommended
+- [APK Download Fix](features/apk-download/APK_DOWNLOAD_FIX.md) - Bug fixes
+- [Button Download Fix](features/apk-download/BUTTON_DOWNLOAD_FIX.md) - UI fixes
+- [Routes Comparison](features/apk-download/DOWNLOAD_ROUTES_COMPARISON.md) - Route changes
 
-### Authentication
-- **API Key Required:** All endpoints in v2
-- **Header:** `X-Api-Key: your-secret-api-key-123`
-- **Config:** `.env` file → `FLUTTER_API_KEY`
+**What it does**: Download APK files for Flutter app updates.
 
-### Endpoints
+---
+
+### � Depmloyment Documentation
+**Location**: `docs/deployment/`
+
+- [Deployment Guide](deployment/DEPLOYMENT.md) - Production deployment
+- [Deployment Instructions](deployment/DEPLOYMENT_INSTRUCTIONS.md) - Step-by-step
+- [Setup Guide](deployment/SETUP.md) - Initial setup
+- [Hosting Setup](deployment/HOSTING_SETUP.md) - Server configuration
+
+**For**: DevOps, System Administrators
+
+---
+
+### 🧪 Testing Documentation
+**Location**: `docs/testing/`
+
+- [Testing Guide](testing/TESTING_GUIDE.md) - General testing guide
+- [Testing Guide - Upload Progress](testing/TESTING_GUIDE_UPLOAD_PROGRESS.md) - Upload feature tests
+
+**Also see**: `testing/` folder in root for test scripts
+
+---
+
+### �I Guides & Tutorials
+**Location**: `docs/guides/`
+
+- [Troubleshooting](guides/TROUBLESHOOTING.md) - Common issues & solutions
+- [Quick Reference](guides/QUICK_REFERENCE.md) - Commands & queries
+- [Flutter API Guide 1](guides/FLUTTER_API_GUIDE1.md) - Flutter integration
+- [Flutter API Guide 2](guides/FLUTTER_API_GUIDE2.md) - Advanced Flutter
+- [Flutter API Comparison](guides/FLUTTER_API_COMPARISON.md) - API comparison
+- [Ngrok Setup](guides/NGROK_SETUP_GUIDE.md) - Local testing with ngrok
+- [File Storage](guides/PENJELASAN_FILE_STORAGE.md) - File storage explanation
+
+**For**: All users
+
+---
+
+## 🔍 Find Documentation By Topic
+
+### Authentication & Security
+- [API Authentication](api/API-Documentation-Rules-Auth.md)
+- [Flutter API Key](guides/FLUTTER_API_GUIDE1.md)
+
+### Database
+- [Setup](deployment/SETUP.md)
+- [User Sync](features/user-sync/USER_SYNC_FEATURE.md)
+
+### File Upload
+- [Upload Progress](features/upload-progress/UPLOAD_PROGRESS_FEATURE.md)
+- [File Storage](guides/PENJELASAN_FILE_STORAGE.md)
+
+### Mobile App Integration
+- [Flutter API Guide](guides/FLUTTER_API_GUIDE1.md)
+- [API Documentation](api/API_DOCUMENTATION.md)
+- [APK Download](features/apk-download/APK_DOWNLOAD_FIX.md)
+
+### Troubleshooting
+- [Troubleshooting Guide](guides/TROUBLESHOOTING.md)
+- [Bug Fix Summary](features/user-sync/BUGFIX_SUMMARY.md)
+- [API Changelog](api/API_CHANGELOG.md)
+
+---
+
+## 🛠️ Testing Scripts
+
+Test scripts tersedia di folder `testing/` di root project:
+
+- `testing/test-api-login.php` - Test API login
+- `testing/test-check-location.php` - Test check location API
+- `testing/check-constraint.php` - Verify database constraints
+- `testing/test-upload-progress.html` - Test upload progress UI
+- `testing/test-public-download.html` - Test public download
+
+**Usage**:
+```bash
+php testing/test-api-login.php
+php testing/check-constraint.php
 ```
-POST /api/check-location       - Check user location
-GET  /api/check-location        - Check user location (query param)
-GET  /api/latest-version        - Get latest APK version
-```
-
-### Rate Limiting
-- **Limit:** 60 requests per minute
-- **Response:** HTTP 429 if exceeded
 
 ---
 
-## 🎓 Learning Path
+## 📝 Changelog
 
-### Beginner (30 menit)
-1. ✅ [PANDUAN_CEPAT_API.md](PANDUAN_CEPAT_API.md) - 10 min
-2. ✅ Test di Postman - 10 min
-3. ✅ [FLUTTER_API_GUIDE2.md](FLUTTER_API_GUIDE2.md) - 10 min
-
-### Intermediate (1 jam)
-1. ✅ [API_DOCUMENTATION.md](API_DOCUMENTATION.md) - 20 min
-2. ✅ [API_RESPONSE_EXAMPLES.md](API_RESPONSE_EXAMPLES.md) - 20 min
-3. ✅ Implement di Flutter - 20 min
-
-### Advanced (2 jam)
-1. ✅ [SETUP.md](SETUP.md) - 30 min
-2. ✅ [DEPLOYMENT.md](DEPLOYMENT.md) - 30 min
-3. ✅ [PENJELASAN_FILE_STORAGE.md](PENJELASAN_FILE_STORAGE.md) - 20 min
-4. ✅ Production deployment - 40 min
+- [API Changelog](api/API_CHANGELOG.md) - API changes
+- [Upload Progress Changelog](features/upload-progress/CHANGELOG_UPLOAD_PROGRESS.md) - Upload feature changes
+- [Today's Changes](CHANGELOG_TODAY.md) - Recent changes
 
 ---
 
 ## 🆘 Need Help?
 
-### Documentation Issues
-Jika ada yang kurang jelas, cek file lain yang relevan di index ini.
-
-### API Issues
-- Cek [README_API.md](README_API.md) - Common Issues
-- Cek log: `storage/logs/laravel.log`
-
-### Flutter Integration Issues
-- Cek [FLUTTER_API_GUIDE2.md](FLUTTER_API_GUIDE2.md) - Error Handling
-- Cek [API_RESPONSE_EXAMPLES.md](API_RESPONSE_EXAMPLES.md) - Examples
+1. **Check Documentation**: Browse by category above
+2. **Troubleshooting**: See [Troubleshooting Guide](guides/TROUBLESHOOTING.md)
+3. **Quick Reference**: See [Quick Reference](guides/QUICK_REFERENCE.md)
+4. **Contact**: Hubungi tim development
 
 ---
 
-## 📞 Contact
+## 📊 Documentation Statistics
 
-Untuk pertanyaan atau issue, silakan hubungi tim development.
+- **Total Categories**: 6
+- **Total Documents**: 40+
+- **Features Documented**: 4
+- **API Endpoints**: 10+
+- **Test Scripts**: 5+
 
 ---
 
-**Last Updated:** November 4, 2025  
-**Version:** 2.0  
-**Status:** ✅ Complete
+**Last Updated**: November 8, 2025  
+**Maintained By**: Development Team

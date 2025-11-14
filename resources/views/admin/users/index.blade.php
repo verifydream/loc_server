@@ -6,24 +6,26 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>User Management</h2>
-        <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Add User
-        </a>
+        <div>
+            <div class="btn-group me-2" role="group">
+                <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-arrow-repeat"></i> Sync from Server
+                </button>
+                <ul class="dropdown-menu">
+                    @foreach($locations as $location)
+                        <li>
+                            <a class="dropdown-item" href="{{ route('admin.users.sync.preview', $location->id) }}">
+                                <i class="bi bi-server"></i> Sync {{ $location->location_name }}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Add User
+            </a>
+        </div>
     </div>
-
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
-    @if(session('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
 
     <!-- Search and Filter Form -->
     <div class="card mb-4">

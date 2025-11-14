@@ -44,6 +44,10 @@ Route::middleware(['admin.auth'])->prefix('admin')->name('admin.')->group(functi
     
     // User Management Routes
     Route::resource('users', App\Http\Controllers\UserController::class);
+    Route::get('users/sync/{location}/preview', [App\Http\Controllers\UserController::class, 'syncPreview'])
+        ->name('users.sync.preview');
+    Route::post('users/sync/{location}/execute', [App\Http\Controllers\UserController::class, 'syncExecute'])
+        ->name('users.sync.execute');
     
     // Location Management Routes
     Route::resource('locations', App\Http\Controllers\LocationManagementController::class);
