@@ -6,7 +6,7 @@ Selamat datang di dokumentasi Location Server! Dokumentasi ini telah diorganisir
 
 ```
 docs/
-├── api/                      # API Documentation
+├── api/                      # API Documentation & Swagger
 ├── features/                 # Feature Documentation
 │   ├── user-sync/           # User Sync Multi-Server
 │   ├── upload-progress/     # Upload Progress Feature
@@ -15,7 +15,10 @@ docs/
 ├── deployment/              # Deployment Guides
 ├── testing/                 # Testing Guides
 ├── guides/                  # General Guides & Tutorials
-└── README.md               # This file
+├── ui-design/               # UI Design & Redesign Documentation
+├── CHANGELOG.md             # Project Changelog
+├── DOCUMENTATION_INDEX.md   # Detailed Documentation Index
+└── README.md                # This file
 ```
 
 ---
@@ -162,6 +165,11 @@ docs/
 - [Bug Fix Summary](features/user-sync/BUGFIX_SUMMARY.md)
 - [API Changelog](api/API_CHANGELOG.md)
 
+### UI Design & Styling
+- [UI Redesign Summary](ui-design/UI_REDESIGN_SUMMARY.md)
+- [Dark Mode Feature](ui-design/DARK_MODE_FEATURE.md)
+- [Dark Mode Color Update](ui-design/DARK_MODE_COLOR_UPDATE.md)
+
 ---
 
 ## 🛠️ Testing Scripts
@@ -201,13 +209,14 @@ php testing/check-constraint.php
 
 ## 📊 Documentation Statistics
 
-- **Total Categories**: 6
-- **Total Documents**: 40+
+- **Total Categories**: 7
+- **Total Documents**: 50+
 - **Features Documented**: 4
 - **API Endpoints**: 10+
 - **Test Scripts**: 5+
+- **UI Pages Redesigned**: 15
 
 ---
 
-**Last Updated**: November 8, 2025  
+**Last Updated**: November 14, 2025  
 **Maintained By**: Development Team

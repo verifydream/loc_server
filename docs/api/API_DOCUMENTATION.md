@@ -1,437 +1,186 @@
-# API Documentation - Location Server
+# API Documentation dengan Swagger
 
-Dokumentasi lengkap untuk testing API menggunakan Postman atau tools lainnya.
+## Setup Selesai! ✅
 
-## Base URL
+L5-Swagger sudah berhasil diinstall dan dikonfigurasi di project ini.
 
+## Akses Swagger UI
+
+Buka browser dan akses:
 ```
-http://localhost:8000/api
-```
-
-Atau sesuaikan dengan URL server Anda.
-
----
-
-## Authentication
-
-Semua endpoint API memerlukan API Key untuk autentikasi.
-
-### Headers Required
-
-```
-X-Api-Key: your-api-key-here
-Content-Type: application/json
-Accept: application/json
+http://your-domain.com/api/documentation
 ```
 
-**Cara mendapatkan API Key:**
-- API Key disimpan di file `.env` dengan key `FLUTTER_API_KEY`
-- Contoh: `FLUTTER_API_KEY=your-secret-api-key-123`
-
----
-
-## Rate Limiting
-
-- **Limit:** 60 requests per minute
-- **Response ketika limit exceeded:**
-  ```json
-  {
-    "message": "Too Many Attempts."
-  }
-  ```
-
----
-
-## Endpoints
-
-### 1. Check Location
-
-Mengecek lokasi user berdasarkan email.
-
-#### Endpoint
+Untuk development lokal:
 ```
+http://localhost/api/documentation
+```
+
+## API Endpoints yang Terdokumentasi
+
+### 1. Location API
+- **POST** `/api/check-location` - Check user location by email
+- **GET** `/api/check-location` - Check user location by email (alternative method)
+
+### 2. App Version API
+- **GET** `/api/latest-version` - Get latest APK version information
+
+## Cara Menggunakan Swagger UI
+
+### Step 1: Authorize dengan API Key
+1. Klik tombol **"Authorize"** (ikon gembok) di bagian atas halaman
+2. Masukkan API Key kamu di field `X-API-KEY`
+3. Klik **"Authorize"**
+4. Klik **"Close"**
+
+### Step 2: Test Endpoint
+1. Pilih endpoint yang ingin di-test (contoh: POST /api/check-location)
+2. Klik untuk expand endpoint tersebut
+3. Klik tombol **"Try it out"**
+4. Edit request body atau parameters sesuai kebutuhan
+5. Klik **"Execute"**
+6. Lihat response di bagian bawah
+
+### Step 3: Lihat Response
+Response akan menampilkan:
+- **Status Code** (200, 404, 422, 500, dll)
+- **Response Headers**
+- **Response Body** dalam format JSON
+- **Curl Command** untuk copy-paste ke terminal
+
+## Contoh Testing
+
+### Test Check Location
+```json
 POST /api/check-location
-GET  /api/check-location
-```
+Headers: X-API-KEY: your-api-key-here
 
-#### Headers
-```
-X-Api-Key: your-api-key-here
-Content-Type: application/json
-Accept: application/json
-```
-
-#### Request Body (POST)
-```json
+Body:
 {
   "email": "user@example.com"
 }
-```
 
-#### Query Parameters (GET)
-```
-?email=user@example.com
-```
-
-#### Success Response (200 OK)
-
-**User Found:**
-```json
+Expected Response (200):
 {
   "success": true,
   "data": {
-    "user": {
-      "id": 1,
-      "name": "John Doe",
-      "email": "user@example.com",
-      "status": "active"
-    },
-    "location": {
-      "id": 5,
-      "name": "Jakarta Office",
-      "address": "Jl. Sudirman No. 123",
-      "latitude": -6.2088,
-      "longitude": 106.8456,
-      "radius": 100
-    }
+    "location": "Jakarta Office",
+    "latitude": -6.2088,
+    "longitude": 106.8456
   }
 }
 ```
 
-**User Not Found:**
-```json
-{
-  "success": true,
-  "data": {
-    "user": null,
-    "location": null
-  }
-}
-```
-
-#### Error Responses
-
-**Validation Error (422 Unprocessable Entity):**
-```json
-{
-  "success": false,
-  "message": "Validation error",
-  "errors": {
-    "email": [
-      "The email field is required.",
-      "The email must be a valid email address."
-    ]
-  }
-}
-```
-
-**Unauthorized (401):**
-```json
-{
-  "message": "Unauthorized"
-}
-```
-
-**Server Error (500):**
-```json
-{
-  "success": false,
-  "message": "An error occurred"
-}
-```
-
-#### Postman Example
-
-**Method:** POST  
-**URL:** `http://localhost:8000/api/check-location`
-
-**Headers:**
-| Key | Value |
-|-----|-------|
-| X-Api-Key | your-api-key-here |
-| Content-Type | application/json |
-| Accept | application/json |
-
-**Body (raw JSON):**
-```json
-{
-  "email": "user@example.com"
-}
-```
-
----
-
-### 2. Get Latest Version
-
-Mendapatkan informasi versi APK terbaru untuk auto-update.
-
-#### Endpoint
+### Test Latest Version
 ```
 GET /api/latest-version
-```
+Headers: X-API-KEY: your-api-key-here
 
-#### Headers
-```
-X-Api-Key: your-api-key-here
-Accept: application/json
-```
-
-#### Request Body
-Tidak ada body (GET request)
-
-#### Success Response (200 OK)
-
-```json
+Expected Response (200):
 {
   "status": "success",
   "data": {
     "version_name": "1.0.0",
     "version_code": 1,
-    "release_notes": "- Initial release\n- Bug fixes\n- Performance improvements",
-    "download_url": "http://localhost:8000/download/apk/1"
+    "release_notes": "Initial release",
+    "download_url": "https://example.com/download/app.apk"
   }
 }
 ```
 
-**Note:** `download_url` adalah URL publik yang bisa diakses langsung tanpa autentikasi untuk download APK.
+## Menambah Dokumentasi untuk Endpoint Baru
 
-#### Error Responses
+Jika kamu menambah endpoint baru, tambahkan anotasi Swagger di controller:
 
-**No Version Available (404 Not Found):**
-```json
-{
-  "status": "error",
-  "message": "No version available"
+```php
+/**
+ * @OA\Post(
+ *     path="/api/your-endpoint",
+ *     summary="Deskripsi endpoint",
+ *     tags={"Category Name"},
+ *     security={{"apikey": {}}},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             @OA\Property(property="field", type="string", example="value")
+ *         )
+ *     ),
+ *     @OA\Response(response=200, description="Success")
+ * )
+ */
+public function yourMethod() {
+    // your code
 }
 ```
 
-**Unauthorized (401):**
-```json
-{
-  "message": "Unauthorized"
-}
+Kemudian regenerate dokumentasi:
+```bash
+php artisan l5-swagger:generate
 ```
 
-**Server Error (500):**
-```json
-{
-  "status": "error",
-  "message": "Internal server error"
-}
+## Kustomisasi Swagger
+
+### Ubah Judul dan Deskripsi
+Edit file `app/Http/Controllers/Controller.php` di bagian anotasi `@OA\Info`
+
+### Ubah Server URL
+Edit di `@OA\Server` annotation atau set di `.env`:
+```
+L5_SWAGGER_CONST_HOST=http://your-domain.com
 ```
 
-#### Postman Example
-
-**Method:** GET  
-**URL:** `http://localhost:8000/api/latest-version`
-
-**Headers:**
-| Key | Value |
-|-----|-------|
-| X-Api-Key | your-api-key-here |
-| Accept | application/json |
-
-**Body:** None
-
----
-
-## Testing Flow
-
-### 1. Setup Environment
-
-1. Pastikan server Laravel sudah running:
-   ```bash
-   php artisan serve
-   ```
-
-2. Cek API Key di file `.env`:
-   ```
-   FLUTTER_API_KEY=your-secret-api-key-123
-   ```
-
-3. Pastikan sudah ada data user dan location di database
-
-### 2. Test Check Location API
-
-#### Test Case 1: Valid Email (User Exists)
-- **Method:** POST
-- **URL:** `http://localhost:8000/api/check-location`
-- **Headers:** 
-  - `X-Api-Key: your-secret-api-key-123`
-  - `Content-Type: application/json`
-- **Body:**
-  ```json
-  {
-    "email": "existing-user@example.com"
-  }
-  ```
-- **Expected:** Status 200, return user and location data
-
-#### Test Case 2: Invalid Email Format
-- **Body:**
-  ```json
-  {
-    "email": "invalid-email"
-  }
-  ```
-- **Expected:** Status 422, validation error
-
-#### Test Case 3: Missing Email
-- **Body:**
-  ```json
-  {}
-  ```
-- **Expected:** Status 422, validation error
-
-#### Test Case 4: Wrong API Key
-- **Headers:** 
-  - `X-Api-Key: wrong-key`
-- **Expected:** Status 401, Unauthorized
-
-#### Test Case 5: Missing API Key
-- **Headers:** (tanpa X-Api-Key)
-- **Expected:** Status 401, Unauthorized
-
-#### Test Case 6: Using GET Method
-- **Method:** GET
-- **URL:** `http://localhost:8000/api/check-location?email=user@example.com`
-- **Expected:** Status 200, same response as POST
-
-### 3. Test Latest Version API
-
-#### Test Case 1: Get Latest Version (Version Exists)
-- **Method:** GET
-- **URL:** `http://localhost:8000/api/latest-version`
-- **Headers:** 
-  - `X-Api-Key: your-secret-api-key-123`
-- **Expected:** Status 200, return latest version data
-
-#### Test Case 2: No Version Available
-- **Condition:** Hapus semua data di tabel `app_versions`
-- **Expected:** Status 404, "No version available"
-
-#### Test Case 3: Wrong API Key
-- **Headers:** 
-  - `X-Api-Key: wrong-key`
-- **Expected:** Status 401, Unauthorized
-
-#### Test Case 4: Missing API Key
-- **Headers:** (tanpa X-Api-Key)
-- **Expected:** Status 401, Unauthorized
-
----
-
-## Postman Collection
-
-### Import ke Postman
-
-Buat collection baru dengan struktur berikut:
-
-```
-Location Server API
-├── Check Location
-│   ├── POST - Valid Email
-│   ├── POST - Invalid Email
-│   ├── POST - Missing Email
-│   ├── GET - With Query Param
-│   └── POST - Wrong API Key
-└── Latest Version
-    ├── GET - Success
-    ├── GET - No Version
-    └── GET - Wrong API Key
+### Tambah Security Scheme Lain
+Tambahkan di `Controller.php`:
+```php
+/**
+ * @OA\SecurityScheme(
+ *     securityScheme="bearer",
+ *     type="http",
+ *     scheme="bearer"
+ * )
+ */
 ```
 
-### Environment Variables
+## Export Documentation
 
-Buat environment di Postman dengan variables:
+Swagger juga generate file JSON dan YAML yang bisa kamu gunakan untuk:
+- Import ke Postman
+- Generate client SDK
+- Share dengan team
 
-| Variable | Initial Value | Current Value |
-|----------|--------------|---------------|
-| base_url | http://localhost:8000 | http://localhost:8000 |
-| api_key | your-secret-api-key-123 | your-secret-api-key-123 |
+File tersimpan di:
+- `storage/api-docs/api-docs.json`
+- `storage/api-docs/api-docs.yaml`
 
-Gunakan `{{base_url}}` dan `{{api_key}}` di request Anda.
+## Tips & Tricks
 
----
+1. **Gunakan Tags** untuk mengelompokkan endpoints
+2. **Tambahkan Examples** untuk memudahkan testing
+3. **Dokumentasikan semua Response Codes** (200, 400, 404, 500, dll)
+4. **Gunakan Descriptions** yang jelas dan informatif
+5. **Test langsung di Swagger UI** sebelum deploy
 
-## Common Issues & Solutions
+## Troubleshooting
 
-### 1. 401 Unauthorized
-**Problem:** API Key tidak valid atau tidak ditemukan  
-**Solution:** 
-- Cek file `.env` untuk `FLUTTER_API_KEY`
-- Pastikan header `X-Api-Key` sudah benar
-- Restart server setelah update `.env`
+### Swagger UI tidak muncul
+```bash
+php artisan l5-swagger:generate
+php artisan config:clear
+php artisan cache:clear
+```
 
-### 2. 404 Not Found
-**Problem:** Endpoint tidak ditemukan  
-**Solution:**
-- Cek URL endpoint sudah benar
-- Pastikan prefix `/api` ada di URL
-- Clear route cache: `php artisan route:clear`
+### Changes tidak muncul
+```bash
+php artisan l5-swagger:generate
+```
 
-### 3. 422 Validation Error
-**Problem:** Data yang dikirim tidak valid  
-**Solution:**
-- Cek format email sudah benar
-- Pastikan field required tidak kosong
-- Cek response error untuk detail
+### Permission Error
+```bash
+chmod -R 775 storage/api-docs
+```
 
-### 4. 429 Too Many Requests
-**Problem:** Melebihi rate limit (60 req/min)  
-**Solution:**
-- Tunggu 1 menit sebelum request lagi
-- Atau update rate limit di `routes/api.php`
+## Resources
 
-### 5. 500 Internal Server Error
-**Problem:** Error di server  
-**Solution:**
-- Cek log Laravel: `storage/logs/laravel.log`
-- Pastikan database connection OK
-- Cek semua service dan model sudah benar
-
----
-
-## Response Status Codes
-
-| Code | Meaning | Description |
-|------|---------|-------------|
-| 200 | OK | Request berhasil |
-| 401 | Unauthorized | API Key tidak valid |
-| 404 | Not Found | Resource tidak ditemukan |
-| 422 | Unprocessable Entity | Validation error |
-| 429 | Too Many Requests | Rate limit exceeded |
-| 500 | Internal Server Error | Error di server |
-
----
-
-## Notes
-
-1. **API Key Security:**
-   - Jangan commit API Key ke repository
-   - Gunakan `.env` untuk menyimpan API Key
-   - Ganti API Key secara berkala
-
-2. **Download URL:**
-   - URL download APK adalah public route yang bisa diakses tanpa login
-   - Format: `http://your-domain.com/download/apk/{id}`
-   - File APK akan otomatis terdownload dengan nama yang sesuai
-   - Tidak perlu autentikasi atau API key untuk download
-
-3. **Testing Tips:**
-   - Gunakan Postman Collection untuk save semua test cases
-   - Setup environment variables untuk mudah switch antara dev/prod
-   - Save response examples untuk dokumentasi
-
-4. **Rate Limiting:**
-   - Default: 60 requests per minute
-   - Bisa diubah di `routes/api.php` pada middleware `throttle:60,1`
-   - Format: `throttle:attempts,minutes`
-
----
-
-## Contact & Support
-
-Untuk pertanyaan atau issue, silakan hubungi tim development.
-
-**Last Updated:** November 4, 2025
+- [L5-Swagger Documentation](https://github.com/DarkaOnLine/L5-Swagger)
+- [OpenAPI Specification](https://swagger.io/specification/)
+- [Swagger UI](https://swagger.io/tools/swagger-ui/)
