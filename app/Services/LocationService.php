@@ -38,12 +38,21 @@ class LocationService
                 ? url('/public/storage/location-logos/' . $user->location->logo)
                 : null;
 
+            $photoSettings = $user->location->photo_settings ?? [
+                'survey_in' => 5,
+                'survey_in_damage' => 1,
+                'survey_out' => 1,
+                'crani_in' => 2,
+                'crani_out' => 4,
+            ];
+
             return [
                 'email' => $user->email,
                 'online_url' => $user->location->online_url,
                 'location_name' => $user->location->location_name,
                 'location_code' => $user->location->location_code,
                 'location_logo' => $locationLogo,
+                'photo_settings' => $photoSettings,
             ];
         }
 
@@ -54,12 +63,21 @@ class LocationService
                 ? url('/public/storage/location-logos/' . $user->location->logo)
                 : null;
 
+            $photoSettings = $user->location->photo_settings ?? [
+                'survey_in' => 5,
+                'survey_in_damage' => 1,
+                'survey_out' => 1,
+                'crani_in' => 2,
+                'crani_out' => 4,
+            ];
+
             $locations[] = [
                 'email' => $user->email,
                 'online_url' => $user->location->online_url,
                 'location_name' => $user->location->location_name,
                 'location_code' => $user->location->location_code,
                 'location_logo' => $locationLogo,
+                'photo_settings' => $photoSettings,
             ];
         }
 

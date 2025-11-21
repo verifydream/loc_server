@@ -45,6 +45,15 @@ class LocationManagementService
             $validatedData['logo'] = $logoName;
         }
 
+        // Handle photo settings with default values
+        $validatedData['photo_settings'] = [
+            'survey_in' => isset($data['survey_in']) ? (int)$data['survey_in'] : 5,
+            'survey_in_damage' => isset($data['survey_in_damage']) ? (int)$data['survey_in_damage'] : 1,
+            'survey_out' => isset($data['survey_out']) ? (int)$data['survey_out'] : 1,
+            'crani_in' => isset($data['crani_in']) ? (int)$data['crani_in'] : 2,
+            'crani_out' => isset($data['crani_out']) ? (int)$data['crani_out'] : 4,
+        ];
+
         return $this->locationRepository->create($validatedData);
     }
 
@@ -82,6 +91,15 @@ class LocationManagementService
             $logoFile->move(public_path('storage/location-logos'), $logoName);
             $validatedData['logo'] = $logoName;
         }
+
+        // Handle photo settings with default values
+        $validatedData['photo_settings'] = [
+            'survey_in' => isset($data['survey_in']) ? (int)$data['survey_in'] : 5,
+            'survey_in_damage' => isset($data['survey_in_damage']) ? (int)$data['survey_in_damage'] : 1,
+            'survey_out' => isset($data['survey_out']) ? (int)$data['survey_out'] : 1,
+            'crani_in' => isset($data['crani_in']) ? (int)$data['crani_in'] : 2,
+            'crani_out' => isset($data['crani_out']) ? (int)$data['crani_out'] : 4,
+        ];
 
         return $this->locationRepository->update($location, $validatedData);
     }

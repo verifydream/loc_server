@@ -45,18 +45,18 @@
                             </td>
                             <td class="px-6 py-4 text-slate-600 dark:text-slate-400">{{ $version->created_at->format('d M Y, H:i') }}</td>
                             <td class="px-6 py-4 text-right">
-                                <div class="flex items-center justify-end gap-2">
-                                    <a href="{{ route('admin.app-versions.show', $version->id) }}" class="p-2 rounded-lg text-slate-500 hover:bg-slate-200 dark:hover:bg-zinc-700 hover:text-slate-800 dark:hover:text-slate-200 transition-colors" title="View Details">
-                                        <span class="material-symbols-outlined">visibility</span>
+                                <div class="inline-flex items-center gap-2">
+                                    <a href="{{ route('admin.app-versions.show', $version->id) }}" class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-900/80 transition-colors">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">visibility</span>View
                                     </a>
-                                    <a href="{{ route('apk.download', $version->id) }}" target="_blank" class="p-2 rounded-lg text-slate-500 hover:bg-slate-200 dark:hover:bg-zinc-700 hover:text-slate-800 dark:hover:text-slate-200 transition-colors" title="Download APK">
-                                        <span class="material-symbols-outlined">download</span>
+                                    <a href="{{ route('apk.download', $version->id) }}" target="_blank" class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-900/80 transition-colors">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">download</span>Download
                                     </a>
-                                    <a href="{{ route('admin.app-versions.edit', $version->id) }}" class="p-2 rounded-lg text-slate-500 hover:bg-slate-200 dark:hover:bg-zinc-700 hover:text-slate-800 dark:hover:text-slate-200 transition-colors" title="Edit">
-                                        <span class="material-symbols-outlined">edit</span>
+                                    <a href="{{ route('admin.app-versions.edit', $version->id) }}" class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300 hover:bg-amber-200 dark:hover:bg-amber-900/80 transition-colors">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">edit</span>Edit
                                     </a>
-                                    <button type="button" onclick="openDeleteModal({{ $version->id }}, '{{ $version->version_name }}', {{ $version->version_code }})" class="p-2 rounded-lg text-red-500 hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors" title="Delete">
-                                        <span class="material-symbols-outlined">delete</span>
+                                    <button type="button" onclick="openDeleteModal({{ $version->id }}, '{{ $version->version_name }}', {{ $version->version_code }})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-900/80 transition-colors">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">delete</span>Delete
                                     </button>
                                 </div>
                             </td>

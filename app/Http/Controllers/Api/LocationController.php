@@ -23,7 +23,7 @@ class LocationController extends Controller
      * @OA\Post(
      *     path="/api/check-location",
      *     summary="Check user location by email",
-     *     description="Validates user email and returns location data. Returns single location object if user exists in one location, or array of locations if user exists in multiple locations.",
+     *     description="Validates user email and returns location data with photo settings. Returns single location object if user exists in one location, or array of locations if user exists in multiple locations.",
      *     operationId="checkLocation",
      *     tags={"Location"},
      *     security={{"apikey": {}}},
@@ -48,7 +48,16 @@ class LocationController extends Controller
      *                 @OA\Property(property="online_url", type="string", example="https://jakarta.example.com"),
      *                 @OA\Property(property="location_name", type="string", example="Jakarta Office"),
      *                 @OA\Property(property="location_code", type="string", example="JKT"),
-     *                 @OA\Property(property="location_logo", type="string", nullable=true, example="https://example.com/public/storage/location-logos/jakarta.png")
+     *                 @OA\Property(property="location_logo", type="string", nullable=true, example="https://example.com/public/storage/location-logos/jakarta.png"),
+     *                 @OA\Property(
+     *                     property="photo_settings",
+     *                     type="object",
+     *                     @OA\Property(property="survey_in", type="integer", example=5),
+     *                     @OA\Property(property="survey_in_damage", type="integer", example=1),
+     *                     @OA\Property(property="survey_out", type="integer", example=1),
+     *                     @OA\Property(property="crani_in", type="integer", example=2),
+     *                     @OA\Property(property="crani_out", type="integer", example=4)
+     *                 )
      *             )
      *         )
      *     ),
@@ -93,7 +102,7 @@ class LocationController extends Controller
      * @OA\Get(
      *     path="/api/check-location",
      *     summary="Check user location by email (GET method)",
-     *     description="Validates user email and returns location data. Returns single location object if user exists in one location, or array of locations if user exists in multiple locations.",
+     *     description="Validates user email and returns location data with photo settings. Returns single location object if user exists in one location, or array of locations if user exists in multiple locations.",
      *     operationId="checkLocationGet",
      *     tags={"Location"},
      *     security={{"apikey": {}}},
@@ -117,7 +126,16 @@ class LocationController extends Controller
      *                 @OA\Property(property="online_url", type="string", example="https://jakarta.example.com"),
      *                 @OA\Property(property="location_name", type="string", example="Jakarta Office"),
      *                 @OA\Property(property="location_code", type="string", example="JKT"),
-     *                 @OA\Property(property="location_logo", type="string", nullable=true, example="https://example.com/public/storage/location-logos/jakarta.png")
+     *                 @OA\Property(property="location_logo", type="string", nullable=true, example="https://example.com/public/storage/location-logos/jakarta.png"),
+     *                 @OA\Property(
+     *                     property="photo_settings",
+     *                     type="object",
+     *                     @OA\Property(property="survey_in", type="integer", example=5),
+     *                     @OA\Property(property="survey_in_damage", type="integer", example=1),
+     *                     @OA\Property(property="survey_out", type="integer", example=1),
+     *                     @OA\Property(property="crani_in", type="integer", example=2),
+     *                     @OA\Property(property="crani_out", type="integer", example=4)
+     *                 )
      *             )
      *         )
      *     ),

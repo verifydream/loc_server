@@ -48,6 +48,9 @@
                             <td class="p-4 text-slate-600 dark:text-slate-400">{{ $location->online_url }}</td>
                             <td class="p-4 text-right">
                                 <div class="inline-flex items-center gap-2">
+                                    <button type="button" onclick="openPhotoSettingsModal({{ json_encode($location->photo_settings ?? ['survey_in' => 5, 'survey_in_damage' => 1, 'survey_out' => 1, 'crani_in' => 2, 'crani_out' => 4]) }}, '{{ $location->location_name }}')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-900/80 transition-colors">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">photo_camera</span>Photos
+                                    </button>
                                     <a href="{{ route('admin.locations.edit', $location->id) }}" class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300 hover:bg-amber-200 dark:hover:bg-amber-900/80 transition-colors">
                                         <span class="material-symbols-outlined" style="font-size: 16px;">edit</span>Edit
                                     </a>
@@ -99,6 +102,122 @@
     @endif
 </div>
 
+<!-- Photo Settings Modal -->
+<div id="photoSettingsModal" class="hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full mx-4 transform transition-all">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-600 dark:to-blue-700 p-6 rounded-t-2xl">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="bg-white/20 p-2 rounded-lg">
+                        <span class="material-symbols-outlined text-white text-2xl">photo_camera</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Photo Settings</h3>
+                        <p class="text-blue-100 text-sm mt-0.5" id="photoSettingsLocationName"></p>
+                    </div>
+                </div>
+                <button type="button" onclick="closePhotoSettingsModal()" class="text-white/80 hover:text-white hover:bg-white/20 p-2 rounded-lg transition-all">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="p-6">
+            <div class="space-y-3">
+                <!-- Survey In -->
+                <div class="group hover:scale-[1.02] transition-transform">
+                    <div class="flex justify-between items-center p-4 bg-gradient-to-r from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 rounded-xl border border-emerald-200 dark:border-emerald-700/50">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-emerald-500 p-2 rounded-lg">
+                                <span class="material-symbols-outlined text-white text-lg">login</span>
+                            </div>
+                            <span class="text-sm font-semibold text-emerald-900 dark:text-emerald-100">Survey In</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span id="photoSurveyIn" class="text-2xl font-bold text-emerald-700 dark:text-emerald-300"></span>
+                            <span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400">photo_library</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Survey In Damage -->
+                <div class="group hover:scale-[1.02] transition-transform">
+                    <div class="flex justify-between items-center p-4 bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 rounded-xl border border-orange-200 dark:border-orange-700/50">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-orange-500 p-2 rounded-lg">
+                                <span class="material-symbols-outlined text-white text-lg">warning</span>
+                            </div>
+                            <span class="text-sm font-semibold text-orange-900 dark:text-orange-100">Survey In Damage</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span id="photoSurveyInDamage" class="text-2xl font-bold text-orange-700 dark:text-orange-300"></span>
+                            <span class="material-symbols-outlined text-orange-600 dark:text-orange-400">photo_library</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Survey Out -->
+                <div class="group hover:scale-[1.02] transition-transform">
+                    <div class="flex justify-between items-center p-4 bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-xl border border-blue-200 dark:border-blue-700/50">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-blue-500 p-2 rounded-lg">
+                                <span class="material-symbols-outlined text-white text-lg">logout</span>
+                            </div>
+                            <span class="text-sm font-semibold text-blue-900 dark:text-blue-100">Survey Out</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span id="photoSurveyOut" class="text-2xl font-bold text-blue-700 dark:text-blue-300"></span>
+                            <span class="material-symbols-outlined text-blue-600 dark:text-blue-400">photo_library</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Crani In -->
+                <div class="group hover:scale-[1.02] transition-transform">
+                    <div class="flex justify-between items-center p-4 bg-gradient-to-r from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-xl border border-purple-200 dark:border-purple-700/50">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-purple-500 p-2 rounded-lg">
+                                <span class="material-symbols-outlined text-white text-lg">local_shipping</span>
+                            </div>
+                            <span class="text-sm font-semibold text-purple-900 dark:text-purple-100">Crani In</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span id="photoCraniIn" class="text-2xl font-bold text-purple-700 dark:text-purple-300"></span>
+                            <span class="material-symbols-outlined text-purple-600 dark:text-purple-400">photo_library</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Crani Out -->
+                <div class="group hover:scale-[1.02] transition-transform">
+                    <div class="flex justify-between items-center p-4 bg-gradient-to-r from-pink-50 to-pink-100 dark:from-pink-900/20 dark:to-pink-800/20 rounded-xl border border-pink-200 dark:border-pink-700/50">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-pink-500 p-2 rounded-lg">
+                                <span class="material-symbols-outlined text-white text-lg">departure_board</span>
+                            </div>
+                            <span class="text-sm font-semibold text-pink-900 dark:text-pink-100">Crani Out</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span id="photoCraniOut" class="text-2xl font-bold text-pink-700 dark:text-pink-300"></span>
+                            <span class="material-symbols-outlined text-pink-600 dark:text-pink-400">photo_library</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="flex justify-end mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">
+                <button type="button" onclick="closePhotoSettingsModal()" class="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5">
+                    <span class="material-symbols-outlined text-lg">check_circle</span>
+                    Got it
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Delete Modal -->
 <div id="deleteModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
     <div class="bg-white dark:bg-slate-800 rounded-lg shadow-xl max-w-md w-full mx-4">
@@ -126,6 +245,25 @@
 
 @push('scripts')
 <script>
+function openPhotoSettingsModal(photoSettings, locationName) {
+    const modal = document.getElementById('photoSettingsModal');
+    const nameSpan = document.getElementById('photoSettingsLocationName');
+    
+    nameSpan.textContent = locationName;
+    document.getElementById('photoSurveyIn').textContent = photoSettings.survey_in || 5;
+    document.getElementById('photoSurveyInDamage').textContent = photoSettings.survey_in_damage || 1;
+    document.getElementById('photoSurveyOut').textContent = photoSettings.survey_out || 1;
+    document.getElementById('photoCraniIn').textContent = photoSettings.crani_in || 2;
+    document.getElementById('photoCraniOut').textContent = photoSettings.crani_out || 4;
+    
+    modal.classList.remove('hidden');
+}
+
+function closePhotoSettingsModal() {
+    const modal = document.getElementById('photoSettingsModal');
+    modal.classList.add('hidden');
+}
+
 function openDeleteModal(locationId, locationName) {
     const modal = document.getElementById('deleteModal');
     const nameSpan = document.getElementById('deleteLocationName');

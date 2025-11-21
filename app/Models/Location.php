@@ -19,6 +19,16 @@ class Location extends Model
         'location_name',
         'online_url',
         'logo',
+        'photo_settings',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'photo_settings' => 'array',
     ];
 
     /**

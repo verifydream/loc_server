@@ -25,7 +25,7 @@
                     "Location"
                 ],
                 "summary": "Check user location by email (GET method)",
-                "description": "Validates user email and returns location data. Returns single location object if user exists in one location, or array of locations if user exists in multiple locations.",
+                "description": "Validates user email and returns location data with photo settings. Returns single location object if user exists in one location, or array of locations if user exists in multiple locations.",
                 "operationId": "checkLocationGet",
                 "parameters": [
                     {
@@ -73,6 +73,31 @@
                                                     "type": "string",
                                                     "example": "https://example.com/public/storage/location-logos/jakarta.png",
                                                     "nullable": true
+                                                },
+                                                "photo_settings": {
+                                                    "properties": {
+                                                        "survey_in": {
+                                                            "type": "integer",
+                                                            "example": 5
+                                                        },
+                                                        "survey_in_damage": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "survey_out": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "crani_in": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "crani_out": {
+                                                            "type": "integer",
+                                                            "example": 4
+                                                        }
+                                                    },
+                                                    "type": "object"
                                                 }
                                             },
                                             "type": "object"
@@ -167,7 +192,7 @@
                     "Location"
                 ],
                 "summary": "Check user location by email",
-                "description": "Validates user email and returns location data. Returns single location object if user exists in one location, or array of locations if user exists in multiple locations.",
+                "description": "Validates user email and returns location data with photo settings. Returns single location object if user exists in one location, or array of locations if user exists in multiple locations.",
                 "operationId": "checkLocation",
                 "requestBody": {
                     "description": "User email to check location",
@@ -224,6 +249,31 @@
                                                     "type": "string",
                                                     "example": "https://example.com/public/storage/location-logos/jakarta.png",
                                                     "nullable": true
+                                                },
+                                                "photo_settings": {
+                                                    "properties": {
+                                                        "survey_in": {
+                                                            "type": "integer",
+                                                            "example": 5
+                                                        },
+                                                        "survey_in_damage": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "survey_out": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "crani_in": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "crani_out": {
+                                                            "type": "integer",
+                                                            "example": 4
+                                                        }
+                                                    },
+                                                    "type": "object"
                                                 }
                                             },
                                             "type": "object"

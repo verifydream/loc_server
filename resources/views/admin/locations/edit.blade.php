@@ -97,6 +97,97 @@
                         <p class="mt-1.5 text-xs text-slate-500 dark:text-slate-400">Optional. Leave empty to keep current logo. Accepted formats: JPEG, JPG, PNG, GIF, SVG (Max: 2MB)</p>
                     @enderror
                 </div>
+
+                <!-- Photo Settings Section -->
+                <div class="border-t border-slate-200 dark:border-slate-700 pt-6">
+                    <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-4">Photo Settings</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Survey In -->
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="survey_in">
+                                Survey In
+                            </label>
+                            <input class="block w-full rounded-md border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 shadow-sm focus:border-primary focus:ring-primary sm:text-sm @error('survey_in') border-red-500 @enderror" 
+                                   id="survey_in" 
+                                   name="survey_in" 
+                                   type="number" 
+                                   value="{{ old('survey_in', $location->photo_settings['survey_in'] ?? 5) }}" 
+                                   min="0"
+                                   max="100"/>
+                            @error('survey_in')
+                                <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <!-- Survey In Damage -->
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="survey_in_damage">
+                                Survey In Damage
+                            </label>
+                            <input class="block w-full rounded-md border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 shadow-sm focus:border-primary focus:ring-primary sm:text-sm @error('survey_in_damage') border-red-500 @enderror" 
+                                   id="survey_in_damage" 
+                                   name="survey_in_damage" 
+                                   type="number" 
+                                   value="{{ old('survey_in_damage', $location->photo_settings['survey_in_damage'] ?? 1) }}" 
+                                   min="0"
+                                   max="100"/>
+                            @error('survey_in_damage')
+                                <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <!-- Survey Out -->
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="survey_out">
+                                Survey Out
+                            </label>
+                            <input class="block w-full rounded-md border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 shadow-sm focus:border-primary focus:ring-primary sm:text-sm @error('survey_out') border-red-500 @enderror" 
+                                   id="survey_out" 
+                                   name="survey_out" 
+                                   type="number" 
+                                   value="{{ old('survey_out', $location->photo_settings['survey_out'] ?? 1) }}" 
+                                   min="0"
+                                   max="100"/>
+                            @error('survey_out')
+                                <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <!-- Crani In -->
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="crani_in">
+                                Crani In
+                            </label>
+                            <input class="block w-full rounded-md border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 shadow-sm focus:border-primary focus:ring-primary sm:text-sm @error('crani_in') border-red-500 @enderror" 
+                                   id="crani_in" 
+                                   name="crani_in" 
+                                   type="number" 
+                                   value="{{ old('crani_in', $location->photo_settings['crani_in'] ?? 2) }}" 
+                                   min="0"
+                                   max="100"/>
+                            @error('crani_in')
+                                <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <!-- Crani Out -->
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5" for="crani_out">
+                                Crani Out
+                            </label>
+                            <input class="block w-full rounded-md border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 shadow-sm focus:border-primary focus:ring-primary sm:text-sm @error('crani_out') border-red-500 @enderror" 
+                                   id="crani_out" 
+                                   name="crani_out" 
+                                   type="number" 
+                                   value="{{ old('crani_out', $location->photo_settings['crani_out'] ?? 4) }}" 
+                                   min="0"
+                                   max="100"/>
+                            @error('crani_out')
+                                <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Form Actions -->

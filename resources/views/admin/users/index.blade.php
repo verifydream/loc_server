@@ -106,13 +106,15 @@
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300">Inactive</span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right space-x-2">
-                                <a href="{{ route('admin.users.edit', $user->id) }}" class="inline-block p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
-                                    <span class="material-symbols-outlined text-base align-middle text-amber-500">edit</span>
-                                </a>
-                                <button type="button" class="inline-block p-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" onclick="openDeleteModal({{ $user->id }}, '{{ $user->email }}')">
-                                    <span class="material-symbols-outlined text-base align-middle text-red-500">delete</span>
-                                </button>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">
+                                <div class="inline-flex items-center gap-2">
+                                    <a href="{{ route('admin.users.edit', $user->id) }}" class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300 hover:bg-amber-200 dark:hover:bg-amber-900/80 transition-colors">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">edit</span>Edit
+                                    </a>
+                                    <button type="button" onclick="openDeleteModal({{ $user->id }}, '{{ $user->email }}')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-900/80 transition-colors">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">delete</span>Delete
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
