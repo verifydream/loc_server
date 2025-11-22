@@ -14,10 +14,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // Get statistics
-        $totalUsers = User::count();
-        $activeUsers = User::where('status', 'active')->count();
-        $inactiveUsers = User::where('status', 'inactive')->count();
+        // Get statistics - count unique emails instead of total records
+        // since one email can be registered in multiple locations
+        $totalUsers = User::distinct('email')->count('email');
+        $activeUsers = User::where('status', 'active')->distinct('email')->count('email');
+        $inactiveUsers = User::where('status', 'inactive')->distinct('email')->count('email');
         $totalLocations = Location::count();
         
         // Get latest app version

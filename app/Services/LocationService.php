@@ -16,34 +16,72 @@ class LocationService
 
     /**
      * Check user location by email and return location data.
+     * Returns all locations if user exists in multiple locations.
      *
      * @param string $email
-     * @return array
+     * @return array|array[]
      * @throws \Exception
      */
     public function checkUserLocation(string $email): array
     {
-        $user = $this->userRepository->findByEmail($email);
+        $users = $this->userRepository->findAllByEmail($email);
 
-        if (!$user) {
+        if ($users->isEmpty()) {
             throw new \Exception('Email not found', 404);
         }
 
-        if (!$this->validateUserAccess($user)) {
-            throw new \Exception('User is inactive', 403);
+        // If only one location, return single object (backward compatible)
+        if ($users->count() === 1) {
+            $user = $users->first();
+            
+            $locationLogo = $user->location->logo 
+                ? url('/public/storage/location-logos/' . $user->location->logo)
+                : null;
+
+            $photoSettings = $user->location->photo_settings ?? [
+                'survey_in' => 5,
+                'survey_in_damage' => 1,
+                'survey_out' => 1,
+                'crani_in' => 2,
+                'crani_out' => 4,
+            ];
+
+            return [
+                'email' => $user->email,
+                'online_url' => $user->location->online_url,
+                'location_name' => $user->location->location_name,
+                'location_code' => $user->location->location_code,
+                'location_logo' => $locationLogo,
+                'photo_settings' => $photoSettings,
+            ];
         }
 
-        $locationLogo = $user->location->logo 
-            ? url('/public/storage/location-logos/' . $user->location->logo)
-            : null;
+        // If multiple locations, return array of locations
+        $locations = [];
+        foreach ($users as $user) {
+            $locationLogo = $user->location->logo 
+                ? url('/public/storage/location-logos/' . $user->location->logo)
+                : null;
 
-        return [
-            'email' => $user->email,
-            'online_url' => $user->location->online_url,
-            'location_name' => $user->location->location_name,
-            'location_code' => $user->location->location_code,
-            'location_logo' => $locationLogo,
-        ];
+            $photoSettings = $user->location->photo_settings ?? [
+                'survey_in' => 5,
+                'survey_in_damage' => 1,
+                'survey_out' => 1,
+                'crani_in' => 2,
+                'crani_out' => 4,
+            ];
+
+            $locations[] = [
+                'email' => $user->email,
+                'online_url' => $user->location->online_url,
+                'location_name' => $user->location->location_name,
+                'location_code' => $user->location->location_code,
+                'location_logo' => $locationLogo,
+                'photo_settings' => $photoSettings,
+            ];
+        }
+
+        return $locations;
     }
 
     /**

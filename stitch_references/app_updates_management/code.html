@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>App Updates - Location Server</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3B82F6",
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#18181B",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.75rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-700 dark:text-slate-300">
+<div class="flex h-screen">
+<aside class="w-64 flex flex-col bg-slate-900 dark:bg-zinc-900/70 text-slate-200">
+<div class="h-16 flex items-center px-6">
+<span class="material-symbols-outlined mr-3 text-primary">location_on</span>
+<h1 class="text-xl font-semibold text-white">Location Server</h1>
+</div>
+<nav class="flex-1 px-4 py-4">
+<ul class="space-y-2">
+<li>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>Users</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">pin_drop</span>
+<span>Locations</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-primary text-white font-medium shadow-lg shadow-blue-500/20" href="#">
+<span class="material-symbols-outlined">smartphone</span>
+<span>App Updates</span>
+</a>
+</li>
+</ul>
+</nav>
+</aside>
+<div class="flex-1 flex flex-col">
+<header class="h-16 flex items-center justify-end px-8 border-b border-slate-200 dark:border-zinc-800 bg-white dark:bg-background-dark">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">account_circle</span>
+<span>Administrator</span>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-slate-300 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-zinc-700 transition-colors duration-200">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</button>
+</div>
+</header>
+<main class="flex-1 p-8 overflow-y-auto">
+<div class="max-w-7xl mx-auto">
+<div class="flex justify-between items-center mb-8">
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white">App Updates</h2>
+<button class="flex items-center justify-center gap-2 px-5 py-3 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition-all duration-200 transform hover:scale-105">
+<span class="material-symbols-outlined">upload</span>
+<span>Upload New Version</span>
+</button>
+</div>
+<div class="bg-white dark:bg-zinc-900/50 rounded-lg shadow-sm border border-slate-200 dark:border-zinc-800 overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-zinc-800/60">
+<tr>
+<th class="px-6 py-4 font-medium tracking-wider" scope="col">Version Name</th>
+<th class="px-6 py-4 font-medium tracking-wider" scope="col">Version Code</th>
+<th class="px-6 py-4 font-medium tracking-wider" scope="col">Release Notes</th>
+<th class="px-6 py-4 font-medium tracking-wider" scope="col">Upload Date</th>
+<th class="px-6 py-4 font-medium tracking-wider text-right" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-slate-200 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-800/40 transition-colors duration-150">
+<td class="px-6 py-4 font-semibold text-slate-800 dark:text-slate-100">1.0.4</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center justify-center w-6 h-6 bg-slate-200 dark:bg-zinc-700 text-slate-600 dark:text-slate-300 rounded-md text-xs font-bold">4</span>
+</td>
+<td class="px-6 py-4">Fixed critical bugs and improved performance.</td>
+<td class="px-6 py-4">06 Nov 2025, 10:26</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-2 rounded-lg text-slate-500 hover:bg-slate-200 dark:hover:bg-zinc-700 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<button class="p-2 rounded-lg text-slate-500 hover:bg-slate-200 dark:hover:bg-zinc-700 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="p-2 rounded-lg text-slate-500 hover:bg-slate-200 dark:hover:bg-zinc-700 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 rounded-lg text-red-500 hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-slate-200 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-800/40 transition-colors duration-150">
+<td class="px-6 py-4 font-semibold text-slate-800 dark:text-slate-100">1.0.2</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center justify-center w-6 h-6 bg-slate-200 dark:bg-zinc-700 text-slate-600 dark:text-slate-300 rounded-md text-xs font-bold">3</span>
+</td>
+<td class="px-6 py-4">Added new location tracking feature.</td>
+<td class="px-6 py-4">04 Nov 2025, 14:00</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-2 rounded-lg text-slate-500 hover:bg-slate-200 dark:hover:bg-zinc-700 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<button class="p-2 rounded-lg text-slate-500 hover:bg-slate-200 dark:hover:bg-zinc-700 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="p-2 rounded-lg text-slate-500 hover:bg-slate-200 dark:hover:bg-zinc-700 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 rounded-lg text-red-500 hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-slate-200 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-800/40 transition-colors duration-150">
+<td class="px-6 py-4 font-semibold text-slate-800 dark:text-slate-100">1.0.1</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center justify-center w-6 h-6 bg-slate-200 dark:bg-zinc-700 text-slate-600 dark:text-slate-300 rounded-md text-xs font-bold">2</span>
+</td>
+<td class="px-6 py-4">UI enhancements and minor bug fixes.</td>
+<td class="px-6 py-4">04 Nov 2025, 06:28</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-2 rounded-lg text-slate-500 hover:bg-slate-200 dark:hover:bg-zinc-700 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<button class="p-2 rounded-lg text-slate-500 hover:bg-slate-200 dark:hover:bg-zinc-700 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="p-2 rounded-lg text-slate-500 hover:bg-slate-200 dark:hover:bg-zinc-700 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 rounded-lg text-red-500 hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-zinc-800/40 transition-colors duration-150">
+<td class="px-6 py-4 font-semibold text-slate-800 dark:text-slate-100">1.0.0</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center justify-center w-6 h-6 bg-slate-200 dark:bg-zinc-700 text-slate-600 dark:text-slate-300 rounded-md text-xs font-bold">1</span>
+</td>
+<td class="px-6 py-4">Initial public release.</td>
+<td class="px-6 py-4">04 Nov 2025, 06:26</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-2 rounded-lg text-slate-500 hover:bg-slate-200 dark:hover:bg-zinc-700 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<button class="p-2 rounded-lg text-slate-500 hover:bg-slate-200 dark:hover:bg-zinc-700 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="p-2 rounded-lg text-slate-500 hover:bg-slate-200 dark:hover:bg-zinc-700 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 rounded-lg text-red-500 hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">
+                            Showing <span class="font-semibold text-slate-700 dark:text-slate-200">1</span> to <span class="font-semibold text-slate-700 dark:text-slate-200">4</span> of <span class="font-semibold text-slate-700 dark:text-slate-200">4</span> entries
+                        </div>
+</div>
+</div>
+</main>
+</div>
+</div>
+
+</body></html>

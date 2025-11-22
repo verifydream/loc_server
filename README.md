@@ -80,6 +80,31 @@ Proyek backend Laravel ini berfungsi sebagai *server* pendukung untuk aplikasi m
 
 Dari *dashboard* ini, Anda bisa mengelola semua data user, lokasi, dan meng-upload versi `.apk` baru melalui menu **"App Updates"**.
 
+## 📚 API Documentation (Swagger)
+
+Proyek ini sudah dilengkapi dengan **Swagger UI** untuk dokumentasi API interaktif!
+
+* **URL Swagger:** `/api/documentation`
+* **Contoh:** `http://localhost/api/documentation` atau `https://your-domain.com/api/documentation`
+
+### Fitur Swagger UI:
+- ✅ **Testing API langsung** dari browser tanpa Postman
+- ✅ **Dokumentasi lengkap** untuk semua endpoints
+- ✅ **Try it out** - Test API dengan custom parameters dan body
+- ✅ **Authentication** - Input API Key sekali untuk semua requests
+- ✅ **Response examples** - Lihat contoh response untuk setiap endpoint
+
+### Cara Menggunakan:
+1. Buka `http://your-domain.com/api/documentation`
+2. Klik tombol **"Authorize"** dan masukkan API Key kamu
+3. Pilih endpoint yang ingin di-test
+4. Klik **"Try it out"**, edit parameters/body
+5. Klik **"Execute"** dan lihat response
+
+📖 **Dokumentasi lengkap:** Lihat [docs/API_DOCUMENTATION.md](docs/API_DOCUMENTATION.md) dan [docs/SWAGGER_GUIDE.md](docs/SWAGGER_GUIDE.md)
+
+---
+
 ## 📡 Spesifikasi API (untuk Klien Flutter)
 
 ### 1. Endpoint: Check Lokasi (Publik)

@@ -22,6 +22,20 @@ class UserRepository
     }
 
     /**
+     * Find all users by email with location relationship.
+     *
+     * @param string $email
+     * @return Collection
+     */
+    public function findAllByEmail(string $email): Collection
+    {
+        return User::with('location')
+            ->where('email', strtolower($email))
+            ->where('status', 'active')
+            ->get();
+    }
+
+    /**
      * Search users with filters for email, location_id, and status.
      *
      * @param string|null $email

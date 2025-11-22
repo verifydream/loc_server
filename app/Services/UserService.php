@@ -27,7 +27,13 @@ class UserService
     public function createUser(array $data): User
     {
         $validator = Validator::make($data, [
-            'email' => 'required|email|unique:users,email',
+            'email' => [
+                'required',
+                'email',
+                \Illuminate\Validation\Rule::unique('users')->where(function ($query) use ($data) {
+                    return $query->where('location_id', $data['location_id']);
+                }),
+            ],
             'location_id' => 'required|exists:locations,id',
             'status' => 'required|in:active,inactive',
         ]);
@@ -50,7 +56,13 @@ class UserService
     public function updateUser(User $user, array $data): User
     {
         $validator = Validator::make($data, [
-            'email' => 'required|email|unique:users,email,' . $user->id,
+            'email' => [
+                'required',
+                'email',
+                \Illuminate\Validation\Rule::unique('users')->where(function ($query) use ($data) {
+                    return $query->where('location_id', $data['location_id']);
+                })->ignore($user->id),
+            ],
             'location_id' => 'required|exists:locations,id',
             'status' => 'required|in:active,inactive',
         ]);

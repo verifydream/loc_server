@@ -1,0 +1,486 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Location Server API Documentation",
+        "description": "API documentation for Location Server and App Version Management",
+        "contact": {
+            "email": "support@example.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Local Development (localhost)"
+        },
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "Local Development (127.0.0.1)"
+        }
+    ],
+    "paths": {
+        "/api/check-location": {
+            "get": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "Check user location by email (GET method)",
+                "description": "Validates user email and returns location data with photo settings. Returns single location object if user exists in one location, or array of locations if user exists in multiple locations.",
+                "operationId": "checkLocationGet",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "User email address",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "email",
+                            "example": "user@example.com"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation - Single location",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "user@example.com"
+                                                },
+                                                "online_url": {
+                                                    "type": "string",
+                                                    "example": "https://jakarta.example.com"
+                                                },
+                                                "location_name": {
+                                                    "type": "string",
+                                                    "example": "Jakarta Office"
+                                                },
+                                                "location_code": {
+                                                    "type": "string",
+                                                    "example": "JKT"
+                                                },
+                                                "location_logo": {
+                                                    "type": "string",
+                                                    "example": "https://example.com/public/storage/location-logos/jakarta.png",
+                                                    "nullable": true
+                                                },
+                                                "photo_settings": {
+                                                    "properties": {
+                                                        "survey_in": {
+                                                            "type": "integer",
+                                                            "example": 5
+                                                        },
+                                                        "survey_in_damage": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "survey_out": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "crani_in": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "crani_out": {
+                                                            "type": "integer",
+                                                            "example": 4
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The email field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Email not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Email not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An error occurred"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apikey": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "Check user location by email",
+                "description": "Validates user email and returns location data with photo settings. Returns single location object if user exists in one location, or array of locations if user exists in multiple locations.",
+                "operationId": "checkLocation",
+                "requestBody": {
+                    "description": "User email to check location",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "User email address",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation - Single location",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "user@example.com"
+                                                },
+                                                "online_url": {
+                                                    "type": "string",
+                                                    "example": "https://jakarta.example.com"
+                                                },
+                                                "location_name": {
+                                                    "type": "string",
+                                                    "example": "Jakarta Office"
+                                                },
+                                                "location_code": {
+                                                    "type": "string",
+                                                    "example": "JKT"
+                                                },
+                                                "location_logo": {
+                                                    "type": "string",
+                                                    "example": "https://example.com/public/storage/location-logos/jakarta.png",
+                                                    "nullable": true
+                                                },
+                                                "photo_settings": {
+                                                    "properties": {
+                                                        "survey_in": {
+                                                            "type": "integer",
+                                                            "example": 5
+                                                        },
+                                                        "survey_in_damage": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "survey_out": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "crani_in": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "crani_out": {
+                                                            "type": "integer",
+                                                            "example": 4
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The email field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Email not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Email not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An error occurred"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apikey": []
+                    }
+                ]
+            }
+        },
+        "/api/latest-version": {
+            "get": {
+                "tags": [
+                    "App Version"
+                ],
+                "summary": "Get latest APK version",
+                "description": "Returns the latest available APK version information including download URL",
+                "operationId": "getLatestVersion",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "version_name": {
+                                                    "description": "Version name",
+                                                    "type": "string",
+                                                    "example": "1.0.0"
+                                                },
+                                                "version_code": {
+                                                    "description": "Version code number",
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "release_notes": {
+                                                    "description": "Release notes",
+                                                    "type": "string",
+                                                    "example": "Initial release with new features"
+                                                },
+                                                "download_url": {
+                                                    "description": "APK download URL",
+                                                    "type": "string",
+                                                    "example": "https://example.com/download/app.apk"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No version available",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No version available"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal server error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apikey": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "apikey": {
+                "type": "apiKey",
+                "description": "API Key for authentication",
+                "name": "X-API-KEY",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Location",
+            "description": "Location"
+        },
+        {
+            "name": "App Version",
+            "description": "App Version"
+        }
+    ]
+}

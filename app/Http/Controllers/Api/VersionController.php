@@ -12,6 +12,46 @@ class VersionController extends Controller
     /**
      * Get the latest APK version information
      *
+     * @OA\Get(
+     *     path="/api/latest-version",
+     *     summary="Get latest APK version",
+     *     description="Returns the latest available APK version information including download URL",
+     *     operationId="getLatestVersion",
+     *     tags={"App Version"},
+     *     security={{"apikey": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *                 @OA\Property(property="version_name", type="string", example="1.0.0", description="Version name"),
+     *                 @OA\Property(property="version_code", type="integer", example=1, description="Version code number"),
+     *                 @OA\Property(property="release_notes", type="string", example="Initial release with new features", description="Release notes"),
+     *                 @OA\Property(property="download_url", type="string", example="https://example.com/download/app.apk", description="APK download URL")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="No version available",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="No version available")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal server error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Internal server error")
+     *         )
+     *     )
+     * )
+     *
      * @return JsonResponse
      */
     public function getLatestVersion(): JsonResponse

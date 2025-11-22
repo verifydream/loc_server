@@ -39,3 +39,9 @@ yarn-error.log
 # OS specific
 .DS_Store
 Thumbs.db
+
+# Documentation
+/docs/
+
+# Ngrok
+ngrok.exe
